@@ -7,7 +7,7 @@ export const validarId = [
     verificarValidaciones
 ];
 
-export const validarCrearCategoria = [
+export const validarCategoria = [
     body("nombre")
         .isString().withMessage("El nombre debe ser texto")
         .trim()
@@ -15,12 +15,3 @@ export const validarCrearCategoria = [
         .isLength({ min: 3, max: 100 }).withMessage("El nombre debe tener entre 3 y 100 caracteres"),
     verificarValidaciones
 ];
-
-export const validarActualizarCategoria = [
-    body("nombre")
-        .isString().withMessage("El nombre debe ser texto")
-        .trim()
-        .notEmpty().withMessage("El nombre de la categoría es obligatorio")
-        .isLength({ min: 3, max: 100 }).withMessage("El nombre debe tener entre 3 y 100 caracteres"),
-    verificarValidaciones
-];  

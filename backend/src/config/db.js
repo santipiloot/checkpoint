@@ -13,6 +13,7 @@ export const testConexion = async () => {
         console.log('Conexion exitosa a la base de datos. Hora del servidor:', res.rows[0].now);
     } catch (err) {
         console.error('Error conectando a la base de datos', err.message);
+        process.exit(1);
     }
 };
 

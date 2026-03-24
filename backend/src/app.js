@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { errorHandler } from './middlewares/error.middleware.js';
 import { passportConfig } from './config/passport.js';
+import rutasApp from './routes.js';
 
 const app = express();
 
@@ -13,6 +14,8 @@ passportConfig();
 app.get('/', (req, res) => {
     res.json({ message: 'Hola mundo' });
 });
+
+app.use('/', rutasApp);
 
 app.use(errorHandler);
 

@@ -1,8 +1,27 @@
 import pool from "../../config/db.js";
 
-export const obtenerProductos = async (query) => {
+export const ejecutarQuery = async (query) => {
     const { rows } = await pool.query(query);
     return rows;
+}
+
+export const obtenerProductos = async (filtros = {}) => {
+    let sql = "SELECT * FROM productos WHERE 1=1";
+    const values = [];
+
+    if (filtros.nombre) {
+        values.push(`%${filtros.nombre}%`);
+        sql += ` AND nombre ILIKE $${values.length}`;
+    }
+
+    if (filtros.categoria_id) {
+        values.push(filtros.categoria_id);
+        sql += ` AND categoria_id = $${values.length}`;
+    }
+
+    sql += " ORDER BY id DESC";
+
+    return await ejecutarQuery({ text: sql, values });
 }
 
 export const productoPorId = async (id) => {

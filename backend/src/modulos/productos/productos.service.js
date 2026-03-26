@@ -5,6 +5,16 @@ export const obtenerProductos = async (filtros) => {
     return productos;
 };
 
+export const obtenerProductoPorCodigo = async (codigo_barras) => {
+    const producto = await productosRepository.obtenerProductoPorCodigo(codigo_barras);
+    if (!producto) {
+        const error = new Error("Producto no encontrado");
+        error.statusCode = 404;
+        throw error;
+    }
+    return producto;
+};
+
 export const obtenerProductoPorId = async (id) => {
     const producto = await productosRepository.productoPorId(id);
     if (!producto) {

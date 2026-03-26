@@ -8,6 +8,7 @@ const router = Router();
 // Todo el mundo
 router.get('/', productosController.obtenerProductos);
 router.get('/:id', validarId, productosController.obtenerProductoPorId);
+router.get('/codigo/:codigo_barras', productosController.obtenerProductoPorCodigo);
 
 // Solo admin
 router.post('/', [verificarRoles(['admin']), validarProducto], productosController.crearProducto);

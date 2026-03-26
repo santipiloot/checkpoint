@@ -47,14 +47,14 @@ export const crearProducto = async (producto) => {
         RETURNING *`,
         [
             producto.nombre,
-            producto.descripcion || null,
-            producto.codigo_barras || null,
-            producto.categoria_id || null,
-            producto.proveedor_id || null,
-            producto.precio_costo || 0,
-            producto.stock || 0,
-            producto.stock_minimo || 0,
-            producto.stock_minimo_auto || null
+            producto.descripcion,
+            producto.codigo_barras,
+            producto.categoria_id,
+            producto.proveedor_id,
+            producto.precio_costo,
+            producto.stock,
+            producto.stock_minimo,
+            producto.stock_minimo_auto
         ]
     );
     return rows[0];

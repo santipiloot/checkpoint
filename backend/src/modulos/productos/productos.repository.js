@@ -5,6 +5,11 @@ export const ejecutarQuery = async (query) => {
     return rows;
 }
 
+export const obtenerProductoPorCodigo = async (codigo_barras) => {
+    const { rows } = await pool.query("SELECT * FROM productos WHERE codigo_barras = $1", [codigo_barras]);
+    return rows[0];
+}
+
 export const obtenerProductos = async (filtros = {}) => {
     let sql = "SELECT * FROM productos WHERE 1=1";
     const values = [];

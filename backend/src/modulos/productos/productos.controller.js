@@ -6,6 +6,12 @@ export const obtenerProductos = async (req, res) => {
     res.json({ success: true, data: productos });
 };
 
+export const obtenerProductoPorCodigo = async (req, res) => {
+    const { codigo_barras } = req.params;
+    const producto = await productosService.obtenerProductoPorCodigo(codigo_barras);
+    res.json({ success: true, data: producto });
+};
+
 export const obtenerProductoPorId = async (req, res) => {
     const { id } = req.params;
     const producto = await productosService.obtenerProductoPorId(id);

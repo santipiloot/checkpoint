@@ -17,6 +17,16 @@ export const crearMovimiento = async (datosMovimiento) => {
         throw error;
     }
 
+
+
+    if (datosMovimiento.tipo === 'entrada' && datosMovimiento.rol === 'empleado') {
+        const error = new Error("El empleado no tiene puede hacer esto");
+        error.status = 403;
+        throw error;
+    }
+
+
+    
     if (datosMovimiento.tipo === 'salida') {
         if (producto.stock < datosMovimiento.cantidad) {
             const error = new Error(`Stock insuficiente`);

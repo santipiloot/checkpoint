@@ -9,7 +9,8 @@ export const obtenerMovimientos = async (req, res) => {
 export const crearMovimiento = async (req, res) => {
     const datosEnvio = {
         ...req.body,
-        usuario_id: req.user.id
+        usuario_id: req.user.id,
+        rol: req.user.rol
     };
 
     const nuevoMovimiento = await movimientosService.crearMovimiento(datosEnvio);

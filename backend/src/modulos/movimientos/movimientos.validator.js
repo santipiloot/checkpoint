@@ -1,9 +1,6 @@
 import { body } from "express-validator";
 import { verificarValidaciones } from "../../middlewares/validaciones.middleware.js";
 
-/**
- * Validaciones para el registro de un nuevo movimiento de stock.
- */
 export const validarMovimiento = [
     body("producto_id")
         .notEmpty().withMessage("El ID del producto es obligatorio")
@@ -19,11 +16,11 @@ export const validarMovimiento = [
 
     body("motivo")
         .notEmpty().withMessage("El motivo del movimiento es obligatorio")
-        .isIn(['compra', 'venta', 'daño', 'robo', 'devolucion', 'correccion'])
+        .isIn(['compra', 'venta', 'daño', 'devolucion', 'correccion'])
         .withMessage("El motivo no es válido"),
 
     body("notas")
-        .optional()
+        .optional({checkFalsy: true})
         .isString().withMessage("Las notas deben ser texto")
         .trim()
         .isLength({ max: 500 }).withMessage("Las notas no pueden superar los 500 caracteres"),

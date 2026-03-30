@@ -1,9 +1,6 @@
 import { body } from "express-validator";
 import { verificarValidaciones } from "../../middlewares/validaciones.middleware.js";
 
-/**
- * Validaciones para el registro de un nuevo movimiento de stock.
- */
 export const validarMovimiento = [
     body("producto_id")
         .notEmpty().withMessage("El ID del producto es obligatorio")

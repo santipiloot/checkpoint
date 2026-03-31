@@ -1,4 +1,5 @@
 import * as productosRepository from "./productos.repository.js";
+import calcularROP from "../../shared/utils/rop.js";
 
 export const obtenerProductos = async (filtros) => {
     const productos = await productosRepository.obtenerProductos(filtros);
@@ -52,4 +53,26 @@ export const eliminarProducto = async (id) => {
     }
 
     return productoEliminado;
+};
+
+export const calcularRopSugerido = async (id) => {
+    const producto = await productosRepository.productoPorId(id);
+    if (!producto) {
+        const error = new Error("Producto no encontrado");
+        error.statusCode = 404;
+        throw error;
+    }
+
+    const ventas30dias = await productosRepository.obtenerVentasUltimos30Dias(id);
+
+    const consumoDiarioPromedio = ventas30dias / 30;
+    // Usamos 30 dias porque es un estandar, 7 dias de cobertura para mas seguridad y 20% de factor de seguridad como un estandar en industria
+    const ropSugerido = calcularROP(consumoDiarioPromedio, 7, 0.20);
+
+    return {
+        id: producto.id,
+        nombre: producto.nombre,
+        consumo_diario_promedio: consumoDiarioPromedio,
+        rop_sugerido: ropSugerido
+    };
 };

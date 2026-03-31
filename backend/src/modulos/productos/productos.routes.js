@@ -14,5 +14,6 @@ router.get('/codigo/:codigo_barras', productosController.obtenerProductoPorCodig
 router.post('/', [verificarRoles(['admin']), validarProducto], productosController.crearProducto);
 router.put('/:id', [verificarRoles(['admin']), validarId, validarProducto], productosController.actualizarProducto);
 router.delete('/:id', [verificarRoles(['admin']), validarId], productosController.eliminarProducto);
+router.get('/:id/rop', [verificarRoles(['admin']), validarId], productosController.calcularRopSugerido);
 
 export default router;

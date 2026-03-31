@@ -100,3 +100,15 @@ export const eliminarProducto = async (id) => {
     const { rows } = await pool.query("DELETE FROM productos WHERE id = $1 RETURNING *", [id]);
     return rows[0];
 }
+
+export const obtenerVentasUltimos30Dias = async (producto_id) => {
+    const { rows } = await pool.query(
+        `SELECT COALESCE(SUM(cantidad), 0) as total 
+        FROM movimientos_stock 
+        WHERE producto_id = $1 
+          AND tipo = 'salida' 
+          AND DATE(creado_at) >= CURRENT_DATE - INTERVAL '30 days'`,
+        [producto_id]
+    );
+    return parseFloat(rows[0].total);
+}

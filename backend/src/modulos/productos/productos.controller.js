@@ -36,3 +36,9 @@ export const eliminarProducto = async (req, res) => {
     const productoEliminado = await productosService.eliminarProducto(id);
     res.json({ success: true, message: "Producto eliminado correctamente", data: productoEliminado });
 };
+
+export const calcularRopSugerido = async (req, res) => {
+    const { id } = req.params;
+    const ropSugerido = await productosService.calcularRopSugerido(id);
+    res.json({ success: true, data: ropSugerido });
+};

@@ -16,13 +16,14 @@ export const getTopVendidos = async (desde, hasta) => {
 
 export const getMenosVendidos = async (desde, hasta) => {
     const query = `
-        SELECT p.nombre, p.id, SUM(m.cantidad) as total_vendido
-        FROM movimientos_stock m
-        JOIN productos p ON m.producto_id = p.id
-        WHERE m.motivo = 'venta' AND m.creado_at BETWEEN $1 AND $2
-        GROUP BY p.id, p.nombre
-        ORDER BY total_vendido ASC
-        LIMIT 10
+       SELECT p.nombre, p.id, COALESCE(SUM(m.cantidad), 0) as total_vendido
+       FROM productos p
+       LEFT JOIN movimientos_stock m ON p.id = m.producto_id 
+       AND m.motivo = 'venta' 
+       AND m.creado_at BETWEEN $1 AND $2
+       GROUP BY p.id, p.nombre
+       ORDER BY total_vendido ASC
+       LIMIT 10
     `;
     const { rows } = await pool.query(query, [desde, hasta]);
     return rows;

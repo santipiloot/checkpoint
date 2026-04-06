@@ -1,5 +1,5 @@
 import bot from '../../config/telegram.js';
-import { obtenerProductos } from '../../modulos/productos/productos.repository.js';
+import { obtenerProductos } from '../../modules/productos/productos.repository.js';
 import { plantillaMensaje } from '../utils/plantillaMensaje.js';
 
 const chatId = process.env.TELEGRAM_CHAT_ID;

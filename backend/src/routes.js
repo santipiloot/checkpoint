@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import authRoutes from './modulos/auth/auth.routes.js';
-import categoriaRoutes from './modulos/categorias/categoria.routes.js';
-import proveedorRoutes from './modulos/proveedores/proveedor.routes.js';
-import productosRoutes from './modulos/productos/productos.routes.js';
-import movimientosRoutes from './modulos/movimientos/movimientos.routes.js';
-import reportesRoutes from './modulos/reportes/reportes.routes.js';
+import authRoutes from './modules/auth/auth.routes.js';
+import categoriaRoutes from './modules/categorias/categoria.routes.js';
+import proveedorRoutes from './modules/proveedores/proveedor.routes.js';
+import productosRoutes from './modules/productos/productos.routes.js';
+import movimientosRoutes from './modules/movimientos/movimientos.routes.js';
+import reportesRoutes from './modules/reportes/reportes.routes.js';
 import { verificarAutenticacion } from './middlewares/auth.middleware.js';
-import usuariosRoutes from "./modulos/usuarios/usuarios.routes.js";
+import usuariosRoutes from "./modules/usuarios/usuarios.routes.js";
 
 const router = Router();
 

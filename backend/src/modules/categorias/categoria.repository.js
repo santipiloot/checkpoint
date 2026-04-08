@@ -1,7 +1,7 @@
 import pool from "../../config/db.js";
 
 export const obtenerCategorias = async () => {
-    const { rows } = await pool.query("SELECT * FROM categorias");
+    const { rows } = await pool.query("SELECT * FROM categorias WHERE activo = true");
     return rows;
 }
 
@@ -21,6 +21,6 @@ export const actualizarCategoria = async (id, nombre) => {
 }
 
 export const eliminarCategoria = async (id) => {
-    const { rows } = await pool.query("DELETE FROM categorias WHERE id = $1 RETURNING *", [id]);
+    const { rows } = await pool.query("UPDATE categorias SET activo = false WHERE id = $1 RETURNING *", [id]);
     return rows[0];
 }

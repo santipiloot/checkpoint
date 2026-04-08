@@ -13,7 +13,7 @@ export const validarProducto = [
         .trim()
         .notEmpty().withMessage("El nombre del producto es obligatorio")
         .isLength({ min: 3, max: 150 }).withMessage("El nombre debe tener entre 3 y 150 caracteres"),
-    
+
     body("descripcion")
         .optional()
         .isString().withMessage("La descripción debe ser texto")
@@ -47,11 +47,5 @@ export const validarProducto = [
         .optional()
         .isInt({ min: 0 }).withMessage("El stock mínimo debe ser un número entero no negativo")
         .toInt(),
-
-    body("stock_minimo_auto")
-        .optional({ checkFalsy: true })
-        .isInt({ min: 0 }).withMessage("El stock mínimo automático debe ser un número entero no negativo")
-        .toInt(),
-
     verificarValidaciones
 ];

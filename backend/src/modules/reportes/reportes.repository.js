@@ -69,6 +69,18 @@ export const getResumenMovimientos = async (desde, hasta, tipo, motivo) => {
     return rows;
 };
 
+export const getMovimientosPorDia = async (desde, hasta) => {
+    const query = `
+        SELECT DATE(creado_at) as fecha, tipo, motivo, SUM(cantidad) as total_unidades
+        FROM movimientos_stock
+        WHERE creado_at BETWEEN $1 AND $2
+        GROUP BY DATE(creado_at), tipo, motivo
+        ORDER BY fecha ASC
+    `;
+    const { rows } = await pool.query(query, [desde, hasta]);
+    return rows;
+};
+
 export const getValorInventario = async () => {
     const query = `
         SELECT SUM(stock * precio_costo) as valor_total

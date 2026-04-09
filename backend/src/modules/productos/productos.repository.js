@@ -11,8 +11,13 @@ export const obtenerProductoPorCodigo = async (codigo_barras) => {
 }
 
 export const obtenerProductos = async (filtros = {}) => {
-    let sql = "SELECT * FROM productos WHERE activo = true";
+    let sql = "SELECT * FROM productos WHERE 1=1";
     const values = [];
+    if (filtros.inactivos === "true" || filtros.inactivos === "1") {
+        sql += " AND activo = false";
+    } else {
+        sql += " AND activo = true";
+    }
 
     if (filtros.nombre) {
         values.push(`%${filtros.nombre}%`);
@@ -95,6 +100,11 @@ export const actualizarProducto = async (id, producto) => {
 
 export const eliminarProducto = async (id) => {
     const { rows } = await pool.query("UPDATE productos SET activo = false WHERE id = $1 RETURNING *", [id]);
+    return rows[0];
+}
+
+export const reactivarProducto = async (id) => {
+    const { rows } = await pool.query("UPDATE productos SET activo = true WHERE id = $1 RETURNING *", [id]);
     return rows[0];
 }
 

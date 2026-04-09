@@ -55,6 +55,18 @@ export const eliminarProducto = async (id) => {
     return productoEliminado;
 };
 
+export const reactivarProducto = async (id) => {
+    const productoReactivado = await productosRepository.reactivarProducto(id);
+
+    if (!productoReactivado) {
+        const error = new Error("Producto no encontrado");
+        error.statusCode = 404;
+        throw error;
+    }
+
+    return productoReactivado;
+};
+
 export const calcularRopSugerido = async (id) => {
     const producto = await productosRepository.productoPorId(id);
     if (!producto) {

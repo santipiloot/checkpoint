@@ -1,7 +1,8 @@
 import * as proveedorService from "./proveedor.service.js";
 
 export const obtenerProveedores = async (req, res) => {
-    const proveedores = await proveedorService.obtenerProveedores();
+    const filtros = req.query;
+    const proveedores = await proveedorService.obtenerProveedores(filtros);
     res.json({ success: true, data: proveedores });
 };
 
@@ -26,4 +27,10 @@ export const eliminarProveedor = async (req, res) => {
     const { id } = req.params;
     const proveedorEliminado = await proveedorService.eliminarProveedor(id);
     res.json({ success: true, message: "Proveedor eliminado correctamente", data: proveedorEliminado });
+};
+
+export const reactivarProveedor = async (req, res) => {
+    const { id } = req.params;
+    const proveedorReactivado = await proveedorService.reactivarProveedor(id);
+    res.json({ success: true, message: "Proveedor reactivado correctamente", data: proveedorReactivado });
 };

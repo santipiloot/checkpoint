@@ -1,4 +1,4 @@
-import { body, param } from "express-validator";
+import { body, param, query } from "express-validator";
 import { verificarValidaciones } from "../../middlewares/validaciones.middleware.js";
 
 export const validarId = [
@@ -30,5 +30,12 @@ export const validarProveedor = [
         .isString().withMessage("Las notas deben ser texto")
         .trim(),
 
+    verificarValidaciones
+];
+
+export const validarFiltros = [
+    query("inactivos")
+        .optional()
+        .isBoolean().withMessage("inactivos debe ser un valor booleano (true/false)"),
     verificarValidaciones
 ];

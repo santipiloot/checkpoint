@@ -2,6 +2,11 @@ import * as productosService from "./productos.service.js";
 
 export const obtenerProductos = async (req, res) => {
     const filtros = req.query;
+
+    if (req.user && req.user.rol !== 'admin') {
+        filtros.inactivos = false;
+    }
+
     const productos = await productosService.obtenerProductos(filtros);
     res.json({ success: true, data: productos });
 };
@@ -35,6 +40,12 @@ export const eliminarProducto = async (req, res) => {
     const { id } = req.params;
     const productoEliminado = await productosService.eliminarProducto(id);
     res.json({ success: true, message: "Producto eliminado correctamente", data: productoEliminado });
+};
+
+export const reactivarProducto = async (req, res) => {
+    const { id } = req.params;
+    const productoReactivado = await productosService.reactivarProducto(id);
+    res.json({ success: true, message: "Producto reactivado correctamente", data: productoReactivado });
 };
 
 export const calcularRopSugerido = async (req, res) => {

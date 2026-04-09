@@ -1,4 +1,4 @@
-import { body, param } from "express-validator";
+import { body, param, query } from "express-validator";
 import { verificarValidaciones } from "../../middlewares/validaciones.middleware.js";
 
 export const validarId = [
@@ -13,7 +13,7 @@ export const validarProducto = [
         .trim()
         .notEmpty().withMessage("El nombre del producto es obligatorio")
         .isLength({ min: 3, max: 150 }).withMessage("El nombre debe tener entre 3 y 150 caracteres"),
-    
+
     body("descripcion")
         .optional()
         .isString().withMessage("La descripción debe ser texto")
@@ -47,11 +47,12 @@ export const validarProducto = [
         .optional()
         .isInt({ min: 0 }).withMessage("El stock mínimo debe ser un número entero no negativo")
         .toInt(),
+    verificarValidaciones
+];
 
-    body("stock_minimo_auto")
-        .optional({ checkFalsy: true })
-        .isInt({ min: 0 }).withMessage("El stock mínimo automático debe ser un número entero no negativo")
-        .toInt(),
-
+export const validarFiltros = [
+    query("inactivos")
+        .optional()
+        .isBoolean().withMessage("inactivos debe ser un valor booleano (true/false)"),
     verificarValidaciones
 ];

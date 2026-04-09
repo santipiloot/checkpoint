@@ -34,6 +34,12 @@ export const loginUsuario = async (credenciales) => {
         throw error;
     }
 
+    if (usuario.activo === false) {
+        const error = new Error('El usuario se encuentra inactivo o ha sido eliminado');
+        error.status = 403;
+        throw error;
+    }
+
     const match = await bcrypt.compare(password, usuario.password);
     if (!match) {
         const error = new Error('Credenciales inválidas');

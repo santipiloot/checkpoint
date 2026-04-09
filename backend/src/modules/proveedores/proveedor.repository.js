@@ -1,7 +1,13 @@
 import pool from "../../config/db.js";
 
-export const obtenerProveedores = async () => {
-    const { rows } = await pool.query("SELECT * FROM proveedores WHERE activo = true");
+export const obtenerProveedores = async (filtros = {}) => {
+    let sql = "SELECT * FROM proveedores WHERE 1=1";
+    if (filtros.inactivos === "true" || filtros.inactivos === "1") {
+        sql += " AND activo = false";
+    } else {
+        sql += " AND activo = true";
+    }
+    const { rows } = await pool.query(sql);
     return rows;
 }
 
@@ -28,5 +34,10 @@ export const actualizarProveedor = async (id, nombre, email, telefono, notas) =>
 
 export const eliminarProveedor = async (id) => {
     const { rows } = await pool.query("UPDATE proveedores SET activo = false WHERE id = $1 RETURNING *", [id]);
-    return rows;
+    return rows[0];
+}
+
+export const reactivarProveedor = async (id) => {
+    const { rows } = await pool.query("UPDATE proveedores SET activo = true WHERE id = $1 RETURNING *", [id]);
+    return rows[0];
 }

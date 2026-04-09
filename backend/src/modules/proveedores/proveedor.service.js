@@ -1,7 +1,7 @@
 import * as proveedorRepository from "./proveedor.repository.js";
 
-export const obtenerProveedores = async () => {
-    const proveedores = await proveedorRepository.obtenerProveedores();
+export const obtenerProveedores = async (filtros) => {
+    const proveedores = await proveedorRepository.obtenerProveedores(filtros);
     return proveedores;
 }
 
@@ -44,4 +44,16 @@ export const eliminarProveedor = async (id) => {
     }
 
     return proveedorEliminado;
+}
+
+export const reactivarProveedor = async (id) => {
+    const proveedorReactivado = await proveedorRepository.reactivarProveedor(id);
+
+    if (!proveedorReactivado) {
+        const error = new Error("Proveedor no encontrado");
+        error.statusCode = 404;
+        throw error;
+    }
+
+    return proveedorReactivado;
 }

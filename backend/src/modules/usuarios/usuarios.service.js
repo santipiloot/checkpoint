@@ -1,7 +1,7 @@
 import * as usuarioRepository from "./usuarios.repository.js";
 
-export const obtenerUsuarios = async () => {
-    const usuarios = await usuarioRepository.obtenerUsuarios();
+export const obtenerUsuarios = async (filtros) => {
+    const usuarios = await usuarioRepository.obtenerUsuarios(filtros);
     return usuarios;
 }
 
@@ -33,4 +33,14 @@ export const eliminarUsuario = async (id) => {
         throw error;
     }
     return usuarioEliminado;
+}
+
+export const reactivarUsuario = async (id) => {
+    const usuarioReactivado = await usuarioRepository.reactivarUsuario(id);
+    if (!usuarioReactivado) {
+        const error = new Error("Usuario no encontrado");
+        error.statusCode = 404;
+        throw error;
+    }
+    return usuarioReactivado;
 }

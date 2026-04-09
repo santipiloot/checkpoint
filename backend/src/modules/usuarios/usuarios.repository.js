@@ -1,8 +1,13 @@
 import pool from "../../config/db.js";
 
-export const obtenerUsuarios = async () => {
-    const query = "SELECT id, nombre, email, rol FROM usuarios WHERE activo = true";
-    const res = await pool.query(query);
+export const obtenerUsuarios = async (filtros = {}) => {
+    let sql = "SELECT id, nombre, email, rol FROM usuarios WHERE 1=1";
+    if (filtros.inactivos === "true" || filtros.inactivos === "1") {
+        sql += " AND activo = false";
+    } else {
+        sql += " AND activo = true";
+    }
+    const res = await pool.query(sql);
     return res.rows;
 }
 
@@ -21,6 +26,12 @@ export const editarUsuario = async (id, data) => {
 
 export const eliminarUsuario = async (id) => {
     const query = "UPDATE usuarios SET activo = false WHERE id = $1 RETURNING *";
+    const res = await pool.query(query, [id]);
+    return res.rows[0];
+}
+
+export const reactivarUsuario = async (id) => {
+    const query = "UPDATE usuarios SET activo = true WHERE id = $1 RETURNING *";
     const res = await pool.query(query, [id]);
     return res.rows[0];
 }

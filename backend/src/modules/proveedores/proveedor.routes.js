@@ -11,7 +11,7 @@ router.get("/:id", [verificarRoles(['admin']), validarId], proveedorController.o
 
 router.post("/", [verificarRoles(['admin']), validarProveedor], proveedorController.crearProveedor);
 
-router.put("/:id", [verificarRoles(['admin']), validarId, validarProveedor], proveedorController.actualizarProveedor);
+router.put("/editar/:id", [verificarRoles(['admin']), validarId, validarProveedor], proveedorController.actualizarProveedor);
 
 router.delete("/:id", [verificarRoles(['admin']), validarId], proveedorController.eliminarProveedor);
 

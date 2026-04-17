@@ -16,11 +16,11 @@ export const validarMovimiento = [
 
     body("motivo")
         .notEmpty().withMessage("El motivo del movimiento es obligatorio")
-        .isIn(['compra', 'venta', 'daño', 'devolucion', 'correccion'])
+        .isIn(['compra', 'venta', 'daño', 'robo', 'devolucion', 'correccion'])
         .withMessage("El motivo no es válido"),
 
     body("notas")
-        .optional({checkFalsy: true})
+        .optional({ checkFalsy: true })
         .isString().withMessage("Las notas deben ser texto")
         .trim()
         .isLength({ max: 500 }).withMessage("Las notas no pueden superar los 500 caracteres"),

@@ -12,13 +12,15 @@ export const generarReporteGeneral = async (filtros) => {
         menosVendidos,
         analisisPerdidas,
         resumenMovimientos,
-        valorInventario
+        valorInventario,
+        movimientosPorDia
     ] = await Promise.all([
         reportesRepository.getTopVendidos(fechaDesde, fechaHasta),
         reportesRepository.getMenosVendidos(fechaDesde, fechaHasta),
         reportesRepository.getAnalisisPerdidas(fechaDesde, fechaHasta),
         reportesRepository.getResumenMovimientos(fechaDesde, fechaHasta, tipo, motivo),
-        reportesRepository.getValorInventario()
+        reportesRepository.getValorInventario(),
+        reportesRepository.getMovimientosPorDia(fechaDesde, fechaHasta)
     ]);
 
     return {
@@ -27,6 +29,7 @@ export const generarReporteGeneral = async (filtros) => {
             resumen_movimientos: resumenMovimientos,
             valoracion_inventario: parseFloat(valorInventario)
         },
+        grafico_dias: movimientosPorDia,
         ventas: {
             masVendidos: topVendidos,
             menosVendidos: menosVendidos

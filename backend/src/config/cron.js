@@ -4,7 +4,7 @@ import { verificarStockCritico } from '../shared/services/alert.service.js';
 export const initCron = () => {
 
     // El 0 * * * * es cada hora, para pruebas ponerlo en * * * * * para que se envien cada minuto
-    cron.schedule('0 * * * *', async () => {
+    cron.schedule('0 */4 * * *', async () => {
         try {
             console.log('Ejecutando tarea cron: Verificación de stock crítico');
             await verificarStockCritico();

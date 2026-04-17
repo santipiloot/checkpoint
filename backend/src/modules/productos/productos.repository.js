@@ -13,6 +13,11 @@ export const obtenerProductoPorCodigo = async (codigo_barras) => {
 export const obtenerProductos = async (filtros = {}) => {
     let sql = "SELECT * FROM productos WHERE 1=1";
     const values = [];
+    if (filtros.inactivos === "true" || filtros.inactivos === "1") {
+        sql += " AND activo = false";
+    } else {
+        sql += " AND activo = true";
+    }
 
     if (filtros.nombre) {
         values.push(`%${filtros.nombre}%`);
@@ -47,19 +52,18 @@ export const productoPorId = async (id) => {
 export const crearProducto = async (producto) => {
     const { rows } = await pool.query(
         `INSERT INTO productos 
-        (nombre, descripcion, codigo_barras, categoria_id, proveedor_id, precio_costo, stock, stock_minimo, stock_minimo_auto) 
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) 
+        (nombre, descripcion, codigo_barras, categoria_id, proveedor_id, precio_costo, stock, stock_minimo) 
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
         RETURNING *`,
         [
             producto.nombre,
-            producto.descripcion,
-            producto.codigo_barras,
-            producto.categoria_id,
-            producto.proveedor_id,
-            producto.precio_costo,
-            producto.stock,
-            producto.stock_minimo,
-            producto.stock_minimo_auto
+            producto.descripcion || null,
+            producto.codigo_barras || null,
+            producto.categoria_id || null,
+            producto.proveedor_id || null,
+            producto.precio_costo || 0,
+            producto.stock || 0,
+            producto.stock_minimo || 0
         ]
     );
     return rows[0];
@@ -75,9 +79,8 @@ export const actualizarProducto = async (id, producto) => {
             proveedor_id = $5, 
             precio_costo = $6, 
             stock = $7, 
-            stock_minimo = $8, 
-            stock_minimo_auto = $9 
-        WHERE id = $10 
+            stock_minimo = $8 
+        WHERE id = $9 
         RETURNING *`,
         [
             producto.nombre,
@@ -88,7 +91,6 @@ export const actualizarProducto = async (id, producto) => {
             producto.precio_costo || 0,
             producto.stock || 0,
             producto.stock_minimo || 0,
-            producto.stock_minimo_auto || null,
             id
         ]
     );
@@ -97,7 +99,12 @@ export const actualizarProducto = async (id, producto) => {
 
 
 export const eliminarProducto = async (id) => {
-    const { rows } = await pool.query("DELETE FROM productos WHERE id = $1 RETURNING *", [id]);
+    const { rows } = await pool.query("UPDATE productos SET activo = false WHERE id = $1 RETURNING *", [id]);
+    return rows[0];
+}
+
+export const reactivarProducto = async (id) => {
+    const { rows } = await pool.query("UPDATE productos SET activo = true WHERE id = $1 RETURNING *", [id]);
     return rows[0];
 }
 

@@ -10,6 +10,7 @@ function NavBar() {
     { name: "Home", path: "/" },
     { name: "Proveedores", path: "/proveedores" },
     { name: "Usuarios", path: "/usuarios" },
+    { name: "Movimientos", path: "/movimientos" },
   ];
 
   const isActive = (path) => location.pathname === path;

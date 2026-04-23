@@ -1,7 +1,12 @@
 import React from "react";
+import TablaMovimientos from "./TablaMovimientos.jsx";
 
 function MovimientosLayout() {
-  return <div>MovimientosLayout</div>;
+  return (
+    <div>
+      <TablaMovimientos />
+    </div>
+  );
 }
 
 export default MovimientosLayout;

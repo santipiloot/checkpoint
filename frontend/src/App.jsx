@@ -1,13 +1,16 @@
 import React from "react";
 import { AuthPage, AuthProvider } from "./context/AuthContext.jsx";
-import { Routes, Route } from "react-router";
+import { Routes, Route, Form } from "react-router";
 import Login from "./modules/login/Login.jsx";
 import NavBar from "./modules/navbar/NavBar.jsx";
 import Home from "./modules/home/Home.jsx";
 import ProductosEmpLayout from "./modules/productos/ProductosEmpLayout.jsx";
 import ProductosLayout from "./modules/productos/ProductosLayout.jsx";
 import UsuariosLayout from "./modules/usuarios/UsuariosLayout.jsx";
+import FormUsuario from "./modules/usuarios/FormUsuario.jsx";
+import DetallesUsuario from "./modules/usuarios/DetallesUsuario.jsx";
 import ProveedoresLayout from "./modules/proveedores/ProveedoresLayout.jsx";
+import FormProveedores from "./modules/proveedores/FormProveedores.jsx";
 import MovimientosLayout from "./modules/movimientos/MovimientosLayout.jsx";
 import ReportesLayout from "./modules/reportes/ReportesLayout.jsx";
 
@@ -17,153 +20,144 @@ export default function App() {
       <AuthProvider>
         <Routes>
           <Route path="/login" element={<Login />} />
-        </Routes>
-        <Routes>
-          <Route path="/" element={<NavBar />} />
 
-          <Route index element={<Home />} />
+          <Route path="/" element={<NavBar />}>
+            <Route index element={<Home />} />
 
-          {/* Zona Empleado (Marcar movimientos nomas) */}
+            {/* Zona Empleado (Marcar movimientos nomas) */}
+            <Route
+              path="productos/emp"
+              element={
+                <AuthPage>
+                  <ProductosEmpLayout />
+                </AuthPage>
+              }
+            />
 
-          <Route
-            path="/productos/emp"
-            element={
-              <AuthPage>
-                <ProductosEmpLayout />
-              </AuthPage>
-            }
-          />
+            {/* ZONA ADMIN */}
+            {/* Zona Productos */}
+            <Route
+              path="productos"
+              element={
+                <AuthPage>
+                  <ProductosLayout />
+                </AuthPage>
+              }
+            />
 
-          {/* ZONA ADMIN */}
+            <Route
+              path="productos/:id"
+              element={
+                <AuthPage>
+                  <ProductosLayout />
+                </AuthPage>
+              }
+            />
 
-          {/* Zona Productos */}
+            <Route
+              path="productos/crear"
+              element={
+                <AuthPage>
+                  <ProductosLayout />
+                </AuthPage>
+              }
+            />
 
-          <Route
-            path="/productos"
-            element={
-              <AuthPage>
-                <ProductosLayout />
-              </AuthPage>
-            }
-          />
+            {/* Editar Producto */}
+            <Route
+              path="productos/editar/:id"
+              element={
+                <AuthPage>
+                  <ProductosLayout />
+                </AuthPage>
+              }
+            />
 
-          <Route
-            path="/productos/:id"
-            element={
-              <AuthPage>
-                <ProductosLayout />
-              </AuthPage>
-            }
-          />
+            {/* Zona Usuarios */}
+            <Route
+              path="usuarios"
+              element={
+                <AuthPage>
+                  <UsuariosLayout />
+                </AuthPage>
+              }
+            />
 
-          <Route
-            path="/productos/crear"
-            element={
-              <AuthPage>
-                <ProductosLayout />
-              </AuthPage>
-            }
-          />
+            <Route
+              path="usuarios/:id"
+              element={
+                <AuthPage>
+                  <DetallesUsuario />
+                </AuthPage>
+              }
+            />
 
-          {/* Editar Producto */}
+            <Route
+              path="usuarios/crear"
+              element={
+                <AuthPage>
+                  <FormUsuario />
+                </AuthPage>
+              }
+            />
 
-          <Route
-            path="/productos/editar/:id"
-            element={
-              <AuthPage>
-                <ProductosLayout />
-              </AuthPage>
-            }
-          />
+            <Route
+              path="usuarios/editar/:id"
+              element={
+                <AuthPage>
+                  <UsuariosLayout />
+                </AuthPage>
+              }
+            />
 
-          {/* Zona Usuarios */}
+            {/* Zona Proveedores */}
+            <Route
+              path="proveedores"
+              element={
+                <AuthPage>
+                  <ProveedoresLayout />
+                </AuthPage>
+              }
+            />
 
-          <Route
-            path="/usuarios"
-            element={
-              <AuthPage>
-                <UsuariosLayout />
-              </AuthPage>
-            }
-          />
+            <Route
+              path="proveedores/crear"
+              element={
+                <AuthPage>
+                  <FormProveedores />
+                </AuthPage>
+              }
+            />
 
-          <Route
-            path="/usuarios/:id"
-            element={
-              <AuthPage>
-                <UsuariosLayout />
-              </AuthPage>
-            }
-          />
+            <Route
+              path="proveedores/editar/:id"
+              element={
+                <AuthPage>
+                  <ProveedoresLayout />
+                </AuthPage>
+              }
+            />
 
-          <Route
-            path="/usuarios/crear"
-            element={
-              <AuthPage>
-                <UsuariosLayout />
-              </AuthPage>
-            }
-          />
+            {/* Zona Movimientos */}
+            <Route
+              path="movimientos"
+              element={
+                <AuthPage>
+                  <MovimientosLayout />
+                </AuthPage>
+              }
+            />
 
-          <Route
-            path="/usuarios/editar/:id"
-            element={
-              <AuthPage>
-                <UsuariosLayout />
-              </AuthPage>
-            }
-          />
-
-          {/* Zona Proveedores */}
-
-          <Route
-            path="/proveedores"
-            element={
-              <AuthPage>
-                <ProveedoresLayout />
-              </AuthPage>
-            }
-          />
-
-          <Route
-            path="/proveedores/crear"
-            element={
-              <AuthPage>
-                <ProveedoresLayout />
-              </AuthPage>
-            }
-          />
-
-          <Route
-            path="/proveedores/editar/:id"
-            element={
-              <AuthPage>
-                <ProveedoresLayout />
-              </AuthPage>
-            }
-          />
-
-          {/* Zona Movimientos */}
-
-          <Route
-            path="/movimientos"
-            element={
-              <AuthPage>
-                <MovimientosLayout />
-              </AuthPage>
-            }
-          />
-
-          {/* Zona Reportes */}
-
-          <Route
-            path="/reportes"
-            element={
-              <AuthPage>
-                <ReportesLayout />
-              </AuthPage>
-            }
-          />
+            {/* Zona Reportes */}
+            <Route
+              path="reportes"
+              element={
+                <AuthPage>
+                  <ReportesLayout />
+                </AuthPage>
+              }
+            />
+          </Route>
         </Routes>
       </AuthProvider>
     </>

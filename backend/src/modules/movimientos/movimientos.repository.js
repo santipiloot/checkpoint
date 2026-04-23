@@ -38,6 +38,11 @@ export const obtenerMovimientos = async (filtros = {}) => {
         sql += ` AND m.creado_at <= $${values.length}`;
     }
 
+    if (filtros.search) {
+        values.push(`%${filtros.search}%`);
+        sql += ` AND (p.nombre ILIKE $${values.length} OR m.motivo ILIKE $${values.length})`;
+    }
+
     sql += " ORDER BY m.creado_at DESC";
 
     const { rows } = await pool.query(sql, values);

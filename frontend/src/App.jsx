@@ -7,6 +7,8 @@ import Home from "./modules/home/Home.jsx";
 import ProductosEmpLayout from "./modules/productos/ProductosEmpLayout.jsx";
 import ProductosLayout from "./modules/productos/ProductosLayout.jsx";
 import UsuariosLayout from "./modules/usuarios/UsuariosLayout.jsx";
+import FormUsuario from "./modules/usuarios/FormUsuario.jsx";
+import DetallesUsuario from "./modules/usuarios/DetallesUsuario.jsx";
 import ProveedoresLayout from "./modules/proveedores/ProveedoresLayout.jsx";
 import FormProveedores from "./modules/proveedores/FormProveedores.jsx";
 import MovimientosLayout from "./modules/movimientos/MovimientosLayout.jsx";
@@ -85,7 +87,7 @@ export default function App() {
               path="usuarios/:id"
               element={
                 <AuthPage>
-                  <UsuariosLayout />
+                  <DetallesUsuario />
                 </AuthPage>
               }
             />
@@ -94,7 +96,7 @@ export default function App() {
               path="usuarios/crear"
               element={
                 <AuthPage>
-                  <UsuariosLayout />
+                  <FormUsuario />
                 </AuthPage>
               }
             />

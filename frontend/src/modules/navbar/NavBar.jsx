@@ -9,6 +9,7 @@ function NavBar() {
   const navItems = [
     { name: "Home", path: "/" },
     { name: "Proveedores", path: "/proveedores" },
+    { name: "Usuarios", path: "/usuarios" },
   ];
 
   const isActive = (path) => location.pathname === path;

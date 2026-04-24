@@ -40,11 +40,13 @@ function BajaRotacion({ data, loading }) {
                     <div className="w-8 h-8 rounded-lg bg-[#eceef0] flex items-center justify-center text-xs font-bold text-[#737686]">
                       {i + 1}
                     </div>
-                    <div>
-                      <p className="text-sm font-semibold text-[#191c1e]">
+                    <div className="max-w-[180px]">
+                      <p
+                        className="text-sm font-semibold text-[#191c1e] truncate"
+                        title={item.nombre}
+                      >
                         {item.nombre}
                       </p>
-                      {/* <p className="text-xs text-[#737686]">ID: #{item.id}</p> */}
                     </div>
                   </div>
                   <div className="text-right">

@@ -13,9 +13,10 @@ import {
 function Ventas({ data, loading }) {
   const datosGrafico =
     data?.masVendidos?.slice(0, 5).map((item) => ({
+      full: item.nombre,
       name:
-        item.nombre.length > 15
-          ? item.nombre.substring(0, 15) + "..."
+        item.nombre.length > 12
+          ? item.nombre.substring(0, 12) + "..."
           : item.nombre,
       total: parseInt(item.total_vendido),
     })) || [];
@@ -56,6 +57,9 @@ function Ventas({ data, loading }) {
               <Tooltip
                 cursor={{ fill: "transparent" }}
                 contentStyle={{ borderRadius: "12px", border: "none" }}
+                labelFormatter={(value, payload) =>
+                  payload[0]?.payload?.full || value
+                }
               />
               <Bar dataKey="total" radius={[0, 4, 4, 0]} barSize={20}>
                 {datosGrafico.map((entry, index) => (

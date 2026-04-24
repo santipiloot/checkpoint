@@ -1,0 +1,57 @@
+import React from "react";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  Legend,
+  Tooltip,
+} from "recharts";
+import { transformarPie } from "../utils/estandarizacionDatos.js";
+
+function ResumenMovimientos({ data, loading }) {
+  const datosGrafico = transformarPie(data);
+  const COLORS = ["#004ac6", "#10b981", "#f59e0b", "#ef4444"];
+
+  return (
+    <div className="bg-white p-6 rounded-2xl shadow-sm border border-[#eceef0] h-[400px] flex flex-col">
+      <div className="mb-6">
+        <h3 className="text-lg font-bold text-[#191c1e] font-manrope">
+          Distribución de Motivos
+        </h3>
+        <p className="text-sm text-[#737686]">Operaciones por causa</p>
+      </div>
+
+      <div className="flex-1 w-full">
+        {loading ? (
+          <div className="w-full h-full bg-[#f7f9fb] animate-pulse rounded-xl" />
+        ) : (
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
+              <Pie
+                data={datosGrafico}
+                innerRadius={60}
+                outerRadius={80}
+                paddingAngle={5}
+                dataKey="value"
+              >
+                {datosGrafico.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+              <Tooltip
+                contentStyle={{ borderRadius: "12px", border: "none" }}
+              />
+              <Legend verticalAlign="bottom" align="center" iconType="circle" />
+            </PieChart>
+          </ResponsiveContainer>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default ResumenMovimientos;

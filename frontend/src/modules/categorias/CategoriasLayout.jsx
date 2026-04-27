@@ -1,5 +1,12 @@
 import React from "react";
+import TablaCategorias from "./TablaCategorias.jsx";
 
-export default function CategoriasLayout() {
-  return <div>CategoriasLayout</div>;
+function CategoriasLayout() {
+  return (
+    <div>
+      <TablaCategorias />
+    </div>
+  );
 }
+
+export default CategoriasLayout;

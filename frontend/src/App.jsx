@@ -8,11 +8,12 @@ import ProductosEmpLayout from "./modules/productos/ProductosEmpLayout.jsx";
 import ProductosLayout from "./modules/productos/ProductosLayout.jsx";
 import UsuariosLayout from "./modules/usuarios/UsuariosLayout.jsx";
 import FormUsuario from "./modules/usuarios/FormUsuario.jsx";
-import DetallesUsuario from "./modules/usuarios/DetallesUsuario.jsx";
+// import DetallesUsuario from "./modules/usuarios/DetallesUsuario.jsx";
 import ProveedoresLayout from "./modules/proveedores/ProveedoresLayout.jsx";
 import FormProveedores from "./modules/proveedores/FormProveedores.jsx";
 import MovimientosLayout from "./modules/movimientos/MovimientosLayout.jsx";
 import ReportesLayout from "./modules/reportes/ReportesLayout.jsx";
+import CategoriasLayout from "./modules/categorias/CategoriasLayout.jsx";
 
 export default function App() {
   return (
@@ -73,6 +74,16 @@ export default function App() {
               }
             />
 
+            {/* Zona Categorias */}
+            <Route
+              path="categorias"
+              element={
+                <AuthPage>
+                  <CategoriasLayout />
+                </AuthPage>
+              }
+            />
+
             {/* Zona Usuarios */}
             <Route
               path="usuarios"
@@ -83,14 +94,14 @@ export default function App() {
               }
             />
 
-            <Route
+            {/* <Route
               path="usuarios/:id"
               element={
                 <AuthPage>
                   <DetallesUsuario />
                 </AuthPage>
               }
-            />
+            /> */}
 
             <Route
               path="usuarios/crear"

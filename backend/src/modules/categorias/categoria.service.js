@@ -1,10 +1,9 @@
 import * as categoriaRepository from "./categoria.repository.js";
 
-export const obtenerCategorias = async () => {
-    const categorias = await categoriaRepository.obtenerCategorias();
-    return categorias
-
-}
+export const obtenerCategorias = async (filtros) => {
+    const categorias = await categoriaRepository.obtenerCategorias(filtros);
+    return categorias;
+};
 
 export const obtenerCategoriaPorId = async (id) => {
     const categoria = await categoriaRepository.obtenerCategoriaPorId(id);
@@ -43,4 +42,16 @@ export const eliminarCategoria = async (id) => {
     }
 
     return categoriaEliminada;
+}
+
+export const reactivarCategoria = async (id) => {
+    const categoriaReactivada = await categoriaRepository.reactivarCategoria(id);
+
+    if (!categoriaReactivada) {
+        const error = new Error("Categoria no encontrada");
+        error.statusCode = 404;
+        throw error;
+    }
+
+    return categoriaReactivada;
 }

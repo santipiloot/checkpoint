@@ -9,6 +9,7 @@ function NavBar() {
   const navItems = [
     { name: "Home", path: "/" },
     { name: "Proveedores", path: "/proveedores" },
+    { name: "Categorías", path: "/categorias" },
     { name: "Usuarios", path: "/usuarios" },
     { name: "Movimientos", path: "/movimientos" },
     { name: "Reportes", path: "/reportes" },
@@ -37,11 +38,10 @@ function NavBar() {
             <Link
               key={item.path}
               to={item.path}
-              className={`flex items-center px-4 py-3.5 rounded-xl font-medium transition-all duration-200 group ${
-                isActive(item.path)
+              className={`flex items-center px-4 py-3.5 rounded-xl font-medium transition-all duration-200 group ${isActive(item.path)
                   ? "bg-primary text-white shadow-md shadow-primary/20"
                   : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"
-              }`}
+                }`}
             >
               <span className="relative">
                 {item.name}

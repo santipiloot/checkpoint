@@ -49,6 +49,7 @@ export const loginUsuario = async (credenciales) => {
 
     const payload = {
         id: usuario.id,
+        nombre: usuario.nombre,
         email: usuario.email,
         rol: usuario.rol
     };

@@ -30,9 +30,9 @@ export const AuthProvider = ({ children }) => {
       }
 
       setToken(session.token);
-      setNombre(session.nombre);
-      setEmail(session.email);
-      setRol(session.rol);
+      setNombre(session.usuario.nombre);
+      setEmail(session.usuario.email);
+      setRol(session.usuario.rol);
       return { success: true };
     } catch (err) {
       setError(err.message);

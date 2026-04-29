@@ -3,7 +3,7 @@ import { Link, Outlet, useLocation } from "react-router";
 import { useAuth } from "../../context/AuthContext.jsx";
 
 function NavBar() {
-  const { isAuthenticated, logout, nombre } = useAuth();
+  const { isAuthenticated, logout, nombre, rol } = useAuth();
   const location = useLocation();
 
   const navItems = [
@@ -38,10 +38,11 @@ function NavBar() {
             <Link
               key={item.path}
               to={item.path}
-              className={`flex items-center px-4 py-3.5 rounded-xl font-medium transition-all duration-200 group ${isActive(item.path)
+              className={`flex items-center px-4 py-3.5 rounded-xl font-medium transition-all duration-200 group ${
+                isActive(item.path)
                   ? "bg-primary text-white shadow-md shadow-primary/20"
                   : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"
-                }`}
+              }`}
             >
               <span className="relative">
                 {item.name}
@@ -60,10 +61,10 @@ function NavBar() {
                 <div className="flex items-center space-x-3">
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-bold text-on-surface truncate">
-                      {nombre || "Usuario"}
+                      {nombre.charAt(0).toUpperCase() + nombre.slice(1)}
                     </p>
                     <p className="text-[10px] uppercase tracking-wider font-black text-on-surface-variant/60">
-                      Administrador
+                      {rol.charAt(0).toUpperCase() + rol.slice(1)}
                     </p>
                   </div>
                 </div>

@@ -12,6 +12,7 @@ import FormUsuario from "./modules/usuarios/FormUsuario.jsx";
 import EditUsuarios from "./modules/usuarios/EditUsuarios.jsx";
 import ProveedoresLayout from "./modules/proveedores/ProveedoresLayout.jsx";
 import FormProveedores from "./modules/proveedores/FormProveedores.jsx";
+import EditProveedores from "./modules/proveedores/EditProveedores.jsx";
 import MovimientosLayout from "./modules/movimientos/MovimientosLayout.jsx";
 import ReportesLayout from "./modules/reportes/ReportesLayout.jsx";
 import CategoriasLayout from "./modules/categorias/CategoriasLayout.jsx";
@@ -145,7 +146,7 @@ export default function App() {
               path="proveedores/editar/:id"
               element={
                 <AuthPage>
-                  <ProveedoresLayout />
+                  <EditProveedores />
                 </AuthPage>
               }
             />

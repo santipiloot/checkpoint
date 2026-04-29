@@ -47,7 +47,7 @@ export default function TarjetaProveedores({ proveedor }) {
             Notas
           </span>
           <span className="font-inter text-sm text-on-surface line-clamp-1">
-            {proveedor.nota || "Sin notas"}
+            {proveedor.notas || "Sin notas"}
           </span>
         </div>
       </div>

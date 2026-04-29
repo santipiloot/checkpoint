@@ -222,10 +222,10 @@ function TablaMovimientos() {
         </div>
 
         <div className="bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.04)] overflow-hidden border border-[#eceef0]/50">
-          <div className="overflow-x-auto">
+          <div className="max-h-[600px] overflow-y-auto overflow-x-auto scrollbar-thin scrollbar-thumb-[#004ac6]/10 scrollbar-track-transparent">
             <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-[#f7f9fb]/80 border-b border-[#eceef0]">
+              <thead className="sticky top-0 z-20 bg-white">
+                <tr className="bg-[#f7f9fb]/90 backdrop-blur-md border-b border-[#eceef0]">
                   <th className="px-8 py-5 text-xs font-bold uppercase tracking-wider text-[#434655] font-manrope">
                     <div className="flex items-center gap-2">
                       <Calendar className="w-4 h-4" /> Fecha

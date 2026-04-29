@@ -1,50 +1,72 @@
-import React from "react";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { useNavigate, useParams } from "react-router";
 import { useAuth } from "../../context/AuthContext.jsx";
-import { X, UserPlus, Mail, Lock, ShieldCheck } from "lucide-react";
+import { UserPlus, X, Mail, Lock, ShieldCheck } from "lucide-react";
 
-function FormUsuario({ isOpen, onClose, onUserCreated }) {
+function EditUsuarios() {
+  const navigate = useNavigate();
+  const { id } = useParams();
   const { fetchAuth } = useAuth();
 
-  const initialValues = {
-    nombre: "",
-    email: "",
-    rol: "",
-    password: "",
-  };
-
-  const [values, setValues] = useState(initialValues);
+  const [values, setValues] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const onClose = () => navigate("/usuarios");
+
+  const fetchUsuarios = useCallback(async () => {
+    const response = await fetchAuth(`http://localhost:3000/usuarios/${id}`);
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      if (response.status === 400) {
+        console.log("hubo un error: ", data.error);
+        return;
+      }
+    }
+
+    setValues(data.data);
+  }, [fetchAuth, id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    try {
-      const response = await fetchAuth("http://localhost:3000/auth/register", {
-        method: "POST",
+    const response = await fetchAuth(
+      `http://localhost:3000/usuarios/editar/${id}`,
+      {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
-      });
+      },
+    );
 
-      const data = await response.json();
+    const data = await response.json();
 
-      if (!response.ok || !data.success) {
+    if (!response.ok || !data.success) {
+      if (response.status(400)) {
         console.log("Hubo un error: ", data.error);
-        return;
       }
-
-      setValues(initialValues);
-      if (onUserCreated) onUserCreated();
-      onClose();
-    } catch (error) {
-      console.error("Error creating user:", error);
-    } finally {
-      setLoading(false);
     }
+
+    navigate("/usuarios");
   };
 
-  if (!isOpen) return null;
+  useEffect(() => {
+    fetchUsuarios();
+  }, [fetchUsuarios]);
+
+  if (!values) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/10 backdrop-blur-md">
+        <div className="bg-white p-8 rounded-2xl shadow-xl flex items-center gap-3">
+          <div className="w-6 h-6 border-4 border-[#004ac6] border-t-transparent rounded-full animate-spin"></div>
+          <span className="font-semibold text-[#191c1e]">
+            Cargando usuario...
+          </span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end overflow-hidden">
@@ -58,10 +80,10 @@ function FormUsuario({ isOpen, onClose, onUserCreated }) {
           <div>
             <h2 className="text-2xl font-bold font-manrope text-[#191c1e] flex items-center gap-2">
               <UserPlus className="w-6 h-6 text-[#004ac6]" />
-              Nuevo Usuario
+              Editar Usuario
             </h2>
             <p className="text-sm text-[#434655] font-inter mt-1">
-              Configure las credenciales del sistema
+              Modifique las credenciales del sistema
             </p>
           </div>
           <button
@@ -84,9 +106,9 @@ function FormUsuario({ isOpen, onClose, onUserCreated }) {
                 </div>
                 <input
                   required
-                  placeholder="Ej: Pilot Mansilla"
+                  placeholder="Ej: Nazareno Pilot"
                   className="block w-full pl-10 pr-3 py-3 bg-[#f7f9fb] border-b-2 border-transparent focus:border-[#004ac6] focus:bg-white transition-all duration-200 outline-none font-inter text-[#191c1e]"
-                  value={values.nombre}
+                  value={values.nombre || ""}
                   onChange={(e) =>
                     setValues({ ...values, nombre: e.target.value })
                   }
@@ -107,30 +129,9 @@ function FormUsuario({ isOpen, onClose, onUserCreated }) {
                   type="email"
                   placeholder="usuario@checkpoint.com"
                   className="block w-full pl-10 pr-3 py-3 bg-[#f7f9fb] border-b-2 border-transparent focus:border-[#004ac6] focus:bg-white transition-all duration-200 outline-none font-inter text-[#191c1e]"
-                  value={values.email}
+                  value={values.email || ""}
                   onChange={(e) =>
                     setValues({ ...values, email: e.target.value })
-                  }
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2 group">
-              <label className="text-xs font-semibold uppercase tracking-wider text-[#434655] font-inter ml-1">
-                Contraseña Temporal
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-[#737686]" />
-                </div>
-                <input
-                  required
-                  type="password"
-                  placeholder="••••••••"
-                  className="block w-full pl-10 pr-3 py-3 bg-[#f7f9fb] border-b-2 border-transparent focus:border-[#004ac6] focus:bg-white transition-all duration-200 outline-none font-inter text-[#191c1e]"
-                  value={values.password}
-                  onChange={(e) =>
-                    setValues({ ...values, password: e.target.value })
                   }
                 />
               </div>
@@ -147,7 +148,7 @@ function FormUsuario({ isOpen, onClose, onUserCreated }) {
                 <select
                   required
                   className="block w-full pl-10 pr-3 py-3 bg-[#f7f9fb] border-b-2 border-transparent focus:border-[#004ac6] focus:bg-white transition-all duration-200 outline-none font-inter text-[#191c1e] appearance-none"
-                  value={values.rol}
+                  value={values.rol || ""}
                   onChange={(e) =>
                     setValues({ ...values, rol: e.target.value })
                   }
@@ -176,7 +177,7 @@ function FormUsuario({ isOpen, onClose, onUserCreated }) {
               disabled={loading}
               className="flex-1 px-6 py-3 rounded-xl bg-gradient-to-r from-[#004ac6] to-[#2563eb] text-white font-semibold shadow-lg shadow-[#004ac6]/20 hover:opacity-90 active:scale-[0.98] transition-all duration-200 disabled:opacity-50"
             >
-              {loading ? "Registrando..." : "Crear Usuario"}
+              {loading ? "Guardando..." : "Guardar Cambios"}
             </button>
           </div>
         </div>
@@ -185,4 +186,4 @@ function FormUsuario({ isOpen, onClose, onUserCreated }) {
   );
 }
 
-export default FormUsuario;
+export default EditUsuarios;

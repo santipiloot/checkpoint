@@ -7,10 +7,13 @@ export default function Login() {
   const { error, login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const res = await login(email, password);
+    setLoading(false);
     if (res.success) {
       navigate("/");
     }
@@ -67,9 +70,10 @@ export default function Login() {
 
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-primary to-primary-container text-white py-4 px-6 rounded-xl font-manrope font-bold text-lg shadow-lg hover:shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+            disabled={loading}
+            className="w-full bg-gradient-to-r from-primary to-primary-container text-white py-4 px-6 rounded-xl font-manrope font-bold text-lg shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:grayscale-[0.5] enabled:hover:shadow-primary/20 enabled:hover:scale-[1.02] enabled:active:scale-[0.98]"
           >
-            Iniciar Sesión
+            {loading ? "Iniciando Sesión..." : "Iniciar Sesión"}
           </button>
         </form>
       </div>

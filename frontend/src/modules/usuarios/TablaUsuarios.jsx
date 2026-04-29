@@ -75,7 +75,7 @@ function TablaUsuarios() {
 
         <div className="bg-white rounded-2xl shadow-[0_10px_40px_rgba(25,28,30,0.06)] overflow-hidden border border-[#eceef0]/50">
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+            <table className="w-full text-left border-separate border-spacing-0">
               <thead>
                 <tr className="bg-[#f7f9fb]/50">
                   <th className="px-8 py-4 text-xs font-bold uppercase tracking-wider text-[#434655] font-manrope">
@@ -134,33 +134,35 @@ function TablaUsuarios() {
                         </span>
                       </div>
                     </td>
-                    <td className="px-8 py-5 text-right">
-                      <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Link
-                          to={`/usuarios/${usuario.id}`}
-                          className="p-2 text-[#737686] hover:text-[#004ac6] hover:bg-[#dbe1ff] rounded-lg transition-all"
-                          title="Ver detalles"
-                        >
-                          <Eye className="w-5 h-5" />
-                        </Link>
-                        <Link
-                          to={`/usuarios/editar/${usuario.id}`}
-                          className="p-2 text-[#737686] hover:text-[#004ac6] hover:bg-[#dbe1ff] rounded-lg transition-all"
-                          title="Editar usuario"
-                        >
-                          <Edit3 className="w-5 h-5" />
-                        </Link>
-                        <button
-                          onClick={() => handleDesactivar(usuario.id)}
-                          className="p-2 text-[#737686] hover:text-[#ba1a1a] hover:bg-[#ffdad6] rounded-lg transition-all"
-                          title="Desactivar"
-                        >
-                          <Trash2 className="w-5 h-5" />
-                        </button>
+                    <td className="px-8 py-5 text-right w-40">
+                      <div className="flex justify-end items-center h-10 w-full">
+                        <div className="hidden group-hover:flex items-center gap-2">
+                          <Link
+                            to={`/usuarios/${usuario.id}`}
+                            className="p-2 text-[#737686] hover:text-[#004ac6] hover:bg-[#dbe1ff] rounded-lg transition-all"
+                            title="Ver detalles"
+                          >
+                            <Eye className="w-5 h-5" />
+                          </Link>
+                          <Link
+                            to={`/usuarios/editar/${usuario.id}`}
+                            className="p-2 text-[#737686] hover:text-[#004ac6] hover:bg-[#dbe1ff] rounded-lg transition-all"
+                            title="Editar usuario"
+                          >
+                            <Edit3 className="w-5 h-5" />
+                          </Link>
+                          <button
+                            onClick={() => handleDesactivar(usuario.id)}
+                            className="p-2 text-[#737686] hover:text-[#ba1a1a] hover:bg-[#ffdad6] rounded-lg transition-all"
+                            title="Desactivar"
+                          >
+                            <Trash2 className="w-5 h-5" />
+                          </button>
+                        </div>
+                        <div className="flex group-hover:hidden items-center justify-center w-10 h-10 text-[#737686]">
+                          <MoreHorizontal className="w-5 h-5" />
+                        </div>
                       </div>
-                      <button className="p-2 text-[#737686] group-hover:hidden transition-all">
-                        <MoreHorizontal className="w-5 h-5" />
-                      </button>
                     </td>
                   </tr>
                 ))}

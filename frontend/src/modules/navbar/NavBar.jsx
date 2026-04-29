@@ -34,7 +34,7 @@ function NavBar() {
         </div>
 
         <nav className="flex-1 px-4 space-y-1">
-          {navItems.map((item) => (
+          {isAuthenticated && navItems.map((item) => (
             <Link
               key={item.path}
               to={item.path}

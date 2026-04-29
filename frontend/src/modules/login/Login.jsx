@@ -72,15 +72,6 @@ export default function Login() {
             Iniciar Sesión
           </button>
         </form>
-
-        <div className="pt-4 text-center">
-          <p className="text-sm text-on-surface-variant">
-            ¿Necesitas ayuda?{" "}
-            <span className="text-primary font-semibold cursor-pointer hover:underline">
-              Contactar soporte
-            </span>
-          </p>
-        </div>
       </div>
     </div>
   );

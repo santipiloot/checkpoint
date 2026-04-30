@@ -1,7 +1,7 @@
 import pool from "../../config/db.js";
 
 export const obtenerUsuarios = async (filtros = {}) => {
-    let sql = "SELECT id, nombre, email, rol FROM usuarios WHERE 1=1";
+    let sql = "SELECT id, nombre, email, rol, activo FROM usuarios WHERE 1=1";
     if (filtros.inactivos === "true" || filtros.inactivos === "1") {
         sql += " AND activo = false";
     } else {

@@ -1,7 +1,9 @@
 import React from "react";
+import DashboardLayout from "../dashboard/DashboardLayout.jsx";
 
 function Home() {
-  return <div>Home</div>;
+  return <DashboardLayout />;
 }
 
 export default Home;
+

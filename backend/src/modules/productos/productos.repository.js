@@ -52,12 +52,11 @@ export const productoPorId = async (id) => {
 export const crearProducto = async (producto) => {
     const { rows } = await pool.query(
         `INSERT INTO productos 
-        (nombre, descripcion, codigo_barras, categoria_id, proveedor_id, precio_costo, stock, stock_minimo) 
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
+        (nombre, codigo_barras, categoria_id, proveedor_id, precio_costo, stock, stock_minimo) 
+        VALUES ($1, $2, $3, $4, $5, $6, $7) 
         RETURNING *`,
         [
             producto.nombre,
-            producto.descripcion || null,
             producto.codigo_barras || null,
             producto.categoria_id || null,
             producto.proveedor_id || null,
@@ -73,18 +72,16 @@ export const actualizarProducto = async (id, producto) => {
     const { rows } = await pool.query(
         `UPDATE productos 
         SET nombre = $1, 
-            descripcion = $2, 
-            codigo_barras = $3, 
-            categoria_id = $4, 
-            proveedor_id = $5, 
-            precio_costo = $6, 
-            stock = $7, 
-            stock_minimo = $8 
-        WHERE id = $9 
+            codigo_barras = $2, 
+            categoria_id = $3, 
+            proveedor_id = $4, 
+            precio_costo = $5, 
+            stock = $6, 
+            stock_minimo = $7 
+        WHERE id = $8 
         RETURNING *`,
         [
             producto.nombre,
-            producto.descripcion || null,
             producto.codigo_barras || null,
             producto.categoria_id || null,
             producto.proveedor_id || null,

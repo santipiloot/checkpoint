@@ -23,7 +23,7 @@ export const validarProveedor = [
         .optional({ checkFalsy: true })
         .isString().withMessage("El teléfono debe ser texto")
         .trim()
-        .isLength({ min: 9, max: 15 }).withMessage("El teléfono debe tener entre 9 y 15 caracteres"),
+        .isLength({ min: 9, max: 20 }).withMessage("El teléfono debe tener entre 9 y 20 caracteres"),
 
     body("notas")
         .optional({ checkFalsy: true })

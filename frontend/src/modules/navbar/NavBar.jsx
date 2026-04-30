@@ -7,7 +7,7 @@ function NavBar() {
   const location = useLocation();
 
   const navItems = [
-    { name: "Home", path: "/" },
+    { name: "Dashboard", path: "/" },
     { name: "Productos", path: "/productos" },
     { name: "Proveedores", path: "/proveedores" },
     { name: "Categorías", path: "/categorias" },
@@ -35,23 +35,25 @@ function NavBar() {
         </div>
 
         <nav className="flex-1 px-4 space-y-1">
-          {navItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`flex items-center px-4 py-3.5 rounded-xl font-medium transition-all duration-200 group ${isActive(item.path)
-                ? "bg-primary text-white shadow-md shadow-primary/20"
-                : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"
+          {isAuthenticated &&
+            navItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`flex items-center px-4 py-3.5 rounded-xl font-medium transition-all duration-200 group ${
+                  isActive(item.path)
+                    ? "bg-primary text-white shadow-md shadow-primary/20"
+                    : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"
                 }`}
-            >
-              <span className="relative">
-                {item.name}
-                {isActive(item.path) && (
-                  <span className="absolute -left-2 top-1/2 -translate-y-1/2 w-1 h-4 bg-white/40 rounded-full" />
-                )}
-              </span>
-            </Link>
-          ))}
+              >
+                <span className="relative">
+                  {item.name}
+                  {isActive(item.path) && (
+                    <span className="absolute -left-2 top-1/2 -translate-y-1/2 w-1 h-4 bg-white/40 rounded-full" />
+                  )}
+                </span>
+              </Link>
+            ))}
         </nav>
 
         <div className="p-4 mt-auto">
@@ -61,10 +63,10 @@ function NavBar() {
                 <div className="flex items-center space-x-3">
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-bold text-on-surface truncate">
-                      {nombre || "Usuario"}
+                      {nombre.charAt(0).toUpperCase() + nombre.slice(1)}
                     </p>
                     <p className="text-[10px] uppercase tracking-wider font-black text-on-surface-variant/60">
-                      {rol === "admin" ? "Administrador" : "Empleado"}
+                      {rol.charAt(0).toUpperCase() + rol.slice(1)}
                     </p>
                   </div>
                 </div>

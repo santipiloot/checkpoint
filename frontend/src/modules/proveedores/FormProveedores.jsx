@@ -11,7 +11,7 @@ function FormProveedores() {
     nombre: "",
     email: "",
     telefono: "",
-    nota: "",
+    notas: "",
   };
 
   const [values, setValues] = useState(initialValues);
@@ -102,8 +102,8 @@ function FormProveedores() {
             <textarea
               placeholder="Detalles"
               className={`${inputClasses} min-h-[120px] resize-none`}
-              value={values.nota}
-              onChange={(e) => setValues({ ...values, nota: e.target.value })}
+              value={values.notas}
+              onChange={(e) => setValues({ ...values, notas: e.target.value })}
             />
           </div>
         </div>

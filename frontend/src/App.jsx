@@ -9,8 +9,11 @@ import ProductosLayout from "./modules/productos/ProductosLayout.jsx";
 import UsuariosLayout from "./modules/usuarios/UsuariosLayout.jsx";
 import FormUsuario from "./modules/usuarios/FormUsuario.jsx";
 // import DetallesUsuario from "./modules/usuarios/DetallesUsuario.jsx";
+import EditUsuarios from "./modules/usuarios/EditUsuarios.jsx";
 import ProveedoresLayout from "./modules/proveedores/ProveedoresLayout.jsx";
 import FormProveedores from "./modules/proveedores/FormProveedores.jsx";
+import EditProveedores from "./modules/proveedores/EditProveedores.jsx";
+import DetallesProveedor from "./modules/proveedores/DetallesProveedor.jsx";
 import MovimientosLayout from "./modules/movimientos/MovimientosLayout.jsx";
 import ReportesLayout from "./modules/reportes/ReportesLayout.jsx";
 import CategoriasLayout from "./modules/categorias/CategoriasLayout.jsx";
@@ -108,7 +111,7 @@ export default function App() {
               path="usuarios/editar/:id"
               element={
                 <AuthPage>
-                  <UsuariosLayout />
+                  <EditUsuarios />
                 </AuthPage>
               }
             />
@@ -119,6 +122,15 @@ export default function App() {
               element={
                 <AuthPage>
                   <ProveedoresLayout />
+                </AuthPage>
+              }
+            />
+
+            <Route
+              path="proveedores/:id"
+              element={
+                <AuthPage>
+                  <DetallesProveedor />
                 </AuthPage>
               }
             />
@@ -136,7 +148,7 @@ export default function App() {
               path="proveedores/editar/:id"
               element={
                 <AuthPage>
-                  <ProveedoresLayout />
+                  <EditProveedores />
                 </AuthPage>
               }
             />

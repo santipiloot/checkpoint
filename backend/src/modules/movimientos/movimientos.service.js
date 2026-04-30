@@ -35,8 +35,16 @@ export const crearMovimiento = async (datosMovimiento) => {
 
     if (datosMovimiento.tipo === 'salida') {
         if (producto.stock < datosMovimiento.cantidad) {
-            const error = new Error(`Stock insuficiente`);
-            error.status = 400;
+            const error = new Error(`Stock insuficiente. Disponible: ${producto.stock}`);
+            error.statusCode = 400;
+            throw error;
+        }
+    }
+
+    if (datosMovimiento.tipo === 'ajuste' && datosMovimiento.cantidad < 0) {
+        if (producto.stock < Math.abs(datosMovimiento.cantidad)) {
+            const error = new Error(`No se puede ajustar por debajo de 0. Stock actual: ${producto.stock}`);
+            error.statusCode = 400;
             throw error;
         }
     }

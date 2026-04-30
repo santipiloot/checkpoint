@@ -8,6 +8,7 @@ function NavBar() {
 
   const navItems = [
     { name: "Dashboard", path: "/" },
+    { name: "Productos", path: "/productos" },
     { name: "Proveedores", path: "/proveedores" },
     { name: "Categorías", path: "/categorias" },
     { name: "Usuarios", path: "/usuarios" },

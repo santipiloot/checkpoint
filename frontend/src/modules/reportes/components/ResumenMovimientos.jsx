@@ -11,7 +11,18 @@ import { transformarPie } from "../utils/estandarizacionDatos.js";
 
 function ResumenMovimientos({ data, loading }) {
   const datosGrafico = transformarPie(data);
-  const COLORS = ["#004ac6", "#10b981", "#f59e0b", "#ef4444"];
+
+  const getMotivoColor = (label) => {
+    console.log(`Resumen movimientos: ${label}`);
+    if (label === "Venta") return "#004ac6"; // Azul
+    if (label === "Compra") return "#17c752ff"; // Verde
+    if (label === "Dev. de Cliente") return "#f59e0b"; // Ámbar
+    if (label === "Dev. a Proveedor") return "#fb923c"; // Naranja oscuro
+    if (label === "Robo") return "#ef4444"; // Rojo
+    if (label === "Daño") return "#dc2626"; // Rojo oscuro
+    if (label === "Corrección") return "#6366f1"; // Índigo
+    return "#94a3b8"; // Gris por defecto
+  };
 
   return (
     <div className="bg-white p-6 rounded-2xl shadow-sm border border-[#eceef0] h-[400px] flex flex-col">
@@ -38,7 +49,7 @@ function ResumenMovimientos({ data, loading }) {
                 {datosGrafico.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
+                    fill={getMotivoColor(entry.name)}
                   />
                 ))}
               </Pie>

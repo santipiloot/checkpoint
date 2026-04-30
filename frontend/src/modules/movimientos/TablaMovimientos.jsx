@@ -118,11 +118,10 @@ function TablaMovimientos() {
             </div>
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className={`p-2 rounded-xl border transition-all ${
-                showFilters || filters.tipo || filters.desde || filters.hasta
+              className={`p-2 rounded-xl border transition-all ${showFilters || filters.tipo || filters.desde || filters.hasta
                   ? "bg-[#004ac6] border-[#004ac6] text-white shadow-md shadow-[#004ac6]/20"
                   : "bg-white border-[#eceef0] text-[#434655] hover:bg-[#f7f9fb]"
-              }`}
+                }`}
             >
               <Filter className="w-5 h-5" />
             </button>
@@ -145,6 +144,7 @@ function TablaMovimientos() {
                   <option value="">Todos</option>
                   <option value="entrada">Entrada</option>
                   <option value="salida">Salida</option>
+                  <option value="ajuste">Ajuste</option>
                 </select>
               </div>
               <div className="space-y-2">
@@ -215,7 +215,7 @@ function TablaMovimientos() {
                 Items Movidos
               </p>
               <h3 className="text-2xl font-bold text-[#191c1e]">
-                {movimientos.reduce((acc, curr) => acc + curr.cantidad, 0)}
+                {movimientos.reduce((acc, curr) => acc + Math.abs(curr.cantidad), 0)}
               </h3>
             </div>
           </div>
@@ -280,16 +280,19 @@ function TablaMovimientos() {
                     </td>
                     <td className="px-8 py-5">
                       <span
-                        className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-tight ${
-                          movimiento.tipo === "entrada"
+                        className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-tight ${movimiento.tipo === "entrada"
                             ? "bg-green-100 text-green-700"
-                            : "bg-red-100 text-red-700"
-                        }`}
+                            : movimiento.tipo === "salida"
+                              ? "bg-red-100 text-red-700"
+                              : "bg-indigo-100 text-indigo-700"
+                          }`}
                       >
                         {movimiento.tipo === "entrada" ? (
                           <ArrowDownLeft className="w-3 h-3" />
-                        ) : (
+                        ) : movimiento.tipo === "salida" ? (
                           <ArrowUpRight className="w-3 h-3" />
+                        ) : (
+                          <History className="w-3 h-3" />
                         )}
                         {movimiento.tipo}
                       </span>

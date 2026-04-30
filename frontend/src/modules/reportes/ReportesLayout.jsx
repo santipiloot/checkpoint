@@ -37,6 +37,7 @@ function ReportesLayout() {
       );
       const data = await response.json();
       setReporteData(data);
+      console.log(`Reportes: ${JSON.stringify(data)}`);
     } catch (error) {
       console.error("Error al cargar reportes:", error);
     } finally {

@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
       if (!response.ok) {
         throw new Error(session.message || session.error);
       }
-
+      console.log(session)
       setToken(session.token);
       setNombre(session.usuario.nombre);
       setEmail(session.usuario.email);

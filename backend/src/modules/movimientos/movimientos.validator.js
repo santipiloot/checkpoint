@@ -8,7 +8,7 @@ export const validarMovimiento = [
 
     body("cantidad")
         .notEmpty().withMessage("La cantidad es obligatoria")
-        .isInt({ min: 1 }).withMessage("La cantidad debe ser un número entero mayor a 0"),
+        .isInt({ min: -1000000, max: 1000000 }).custom((value) => value !== 0).withMessage("La cantidad debe ser un número entero y no puede ser 0"),
 
     body("tipo")
         .notEmpty().withMessage("El tipo de movimiento es obligatorio")
@@ -17,7 +17,20 @@ export const validarMovimiento = [
     body("motivo")
         .notEmpty().withMessage("El motivo del movimiento es obligatorio")
         .isIn(['compra', 'venta', 'daño', 'robo', 'devolucion', 'correccion'])
-        .withMessage("El motivo no es válido"),
+        .withMessage("El motivo no es válido")
+        .custom((value, { req }) => {
+            const { tipo } = req.body;
+            if (tipo === 'entrada' && !['compra', 'devolucion'].includes(value)) {
+                throw new Error("Para tipo 'entrada', el motivo debe ser 'compra' o 'devolucion'");
+            }
+            if (tipo === 'salida' && !['venta', 'devolucion'].includes(value)) {
+                throw new Error("Para tipo 'salida', el motivo debe ser 'venta' o 'devolucion'");
+            }
+            if (tipo === 'ajuste' && !['robo', 'daño', 'correccion'].includes(value)) {
+                throw new Error("Para tipo 'ajuste', el motivo debe ser 'robo', 'daño' o 'correccion'");
+            }
+            return true;
+        }),
 
     body("notas")
         .optional({ checkFalsy: true })

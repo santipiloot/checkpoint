@@ -1,10 +1,10 @@
 import React from "react";
 import { AuthPage, AuthProvider } from "./context/AuthContext.jsx";
 import { Routes, Route, Form } from "react-router";
+import { Toaster } from "react-hot-toast";
 import Login from "./modules/login/Login.jsx";
 import NavBar from "./modules/navbar/NavBar.jsx";
 import Home from "./modules/home/Home.jsx";
-import ProductosEmpLayout from "./modules/productos/ProductosEmpLayout.jsx";
 import ProductosLayout from "./modules/productos/ProductosLayout.jsx";
 import UsuariosLayout from "./modules/usuarios/UsuariosLayout.jsx";
 import FormUsuario from "./modules/usuarios/FormUsuario.jsx";
@@ -22,54 +22,46 @@ export default function App() {
   return (
     <>
       <AuthProvider>
+        <Toaster
+          position="top-right"
+          reverseOrder={false}
+          gutter={8}
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: "#fff",
+              color: "#191c1e",
+              borderRadius: "16px",
+              boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+              padding: "16px",
+              fontSize: "14px",
+              fontWeight: "500",
+              fontFamily: "'Inter', sans-serif",
+            },
+            success: {
+              iconTheme: {
+                primary: "#22c55e",
+                secondary: "#fff",
+              },
+            },
+            error: {
+              iconTheme: {
+                primary: "#ef4444",
+                secondary: "#fff",
+              },
+            },
+          }}
+        />
         <Routes>
           <Route path="/login" element={<Login />} />
 
           <Route path="/" element={<NavBar />}>
             <Route index element={<Home />} />
 
-            {/* Zona Empleado (Marcar movimientos nomas) */}
-            <Route
-              path="productos/emp"
-              element={
-                <AuthPage>
-                  <ProductosEmpLayout />
-                </AuthPage>
-              }
-            />
-
             {/* ZONA ADMIN */}
             {/* Zona Productos */}
             <Route
               path="productos"
-              element={
-                <AuthPage>
-                  <ProductosLayout />
-                </AuthPage>
-              }
-            />
-
-            <Route
-              path="productos/:id"
-              element={
-                <AuthPage>
-                  <ProductosLayout />
-                </AuthPage>
-              }
-            />
-
-            <Route
-              path="productos/crear"
-              element={
-                <AuthPage>
-                  <ProductosLayout />
-                </AuthPage>
-              }
-            />
-
-            {/* Editar Producto */}
-            <Route
-              path="productos/editar/:id"
               element={
                 <AuthPage>
                   <ProductosLayout />

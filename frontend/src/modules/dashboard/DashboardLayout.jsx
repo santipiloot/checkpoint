@@ -7,7 +7,7 @@ import FlujoSemanal from "./FlujoSemanal.jsx";
 import { LayoutDashboard } from "lucide-react";
 
 function DashboardLayout() {
-  const { isAuthenticated, rol, fetchAuth } = useAuth();
+  const { isAuthenticated, rol, fetchAuth, nombre } = useAuth();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState({
     stockCritico: [],
@@ -42,7 +42,7 @@ function DashboardLayout() {
     } finally {
       setLoading(false);
     }
-  }, [fetchAuth]);
+  }, [fetchAuth, isAuthenticated, rol]);
 
   useEffect(() => {
     fetchData();
@@ -59,7 +59,7 @@ function DashboardLayout() {
             Inicia sesión
           </h1>
           <p className="text-[#737686] mb-8 leading-relaxed">
-            Debes iniciar sesion para poder acceder a la aplicacipn
+            Debes iniciar sesión para poder acceder a la aplicación
           </p>
           <a
             href="/login"
@@ -74,15 +74,14 @@ function DashboardLayout() {
 
   if (rol !== "admin") {
     return (
-      <div className="min-h-screen bg-[#f7f9fb] flex flex-col items-center justify-center p-8 font-inter">
-        <div className="bg-white p-10 rounded-3xl shadow-xl shadow-blue-100 border border-[#eceef0] text-center max-w-md">
-          <h1 className="text-3xl font-bold text-[#191c1e] mb-4 font-manrope">
-            Bienvenido, {rol}
+      <div className="min-h-screen flex flex-col items-center justify-center p-8">
+        <div className="text-center animate-in fade-in zoom-in duration-500">
+          <h1 className="text-5xl font-black font-manrope text-on-surface mb-4 tracking-tight">
+            Bienvenido,{" "}
+            <span className="text-primary">
+              {nombre.charAt(0).toUpperCase() + nombre.slice(1)}
+            </span>
           </h1>
-          <p className="text-[#737686] mb-8 leading-relaxed">
-            Tu perfil no tiene acceso al dashboard administrativo.
-          </p>
-          {/* <Navigate to="/productos/emp" /> */}
         </div>
       </div>
     );

@@ -6,15 +6,18 @@ function NavBar() {
   const { isAuthenticated, logout, nombre, rol } = useAuth();
   const location = useLocation();
 
-  const navItems = [
-    { name: "Dashboard", path: "/" },
-    { name: "Productos", path: "/productos" },
-    { name: "Proveedores", path: "/proveedores" },
-    { name: "Categorías", path: "/categorias" },
-    { name: "Usuarios", path: "/usuarios" },
-    { name: "Movimientos", path: "/movimientos" },
-    { name: "Reportes", path: "/reportes" },
-  ];
+  const navItems =
+    rol === "admin"
+      ? [
+          { name: "Dashboard", path: "/" },
+          { name: "Productos", path: "/productos" },
+          { name: "Proveedores", path: "/proveedores" },
+          { name: "Categorías", path: "/categorias" },
+          { name: "Usuarios", path: "/usuarios" },
+          { name: "Movimientos", path: "/movimientos" },
+          { name: "Reportes", path: "/reportes" },
+        ]
+      : [{ name: "Productos", path: "/productos" }];
 
   const isActive = (path) => location.pathname === path;
 

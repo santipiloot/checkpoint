@@ -8,7 +8,7 @@ export const validarMovimiento = [
 
     body("cantidad")
         .notEmpty().withMessage("La cantidad es obligatoria")
-        .isInt({ min: 1 }).withMessage("La cantidad debe ser un número entero mayor a 0"),
+        .isInt({ min: -1000000, max: 1000000 }).custom((value) => value !== 0).withMessage("La cantidad debe ser un número entero y no puede ser 0"),
 
     body("tipo")
         .notEmpty().withMessage("El tipo de movimiento es obligatorio")

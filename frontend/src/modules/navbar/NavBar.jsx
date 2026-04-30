@@ -3,11 +3,12 @@ import { Link, Outlet, useLocation } from "react-router";
 import { useAuth } from "../../context/AuthContext.jsx";
 
 function NavBar() {
-  const { isAuthenticated, logout, nombre } = useAuth();
+  const { isAuthenticated, logout, nombre, rol } = useAuth();
   const location = useLocation();
 
   const navItems = [
     { name: "Home", path: "/" },
+    { name: "Productos", path: "/productos" },
     { name: "Proveedores", path: "/proveedores" },
     { name: "Categorías", path: "/categorias" },
     { name: "Usuarios", path: "/usuarios" },
@@ -39,8 +40,8 @@ function NavBar() {
               key={item.path}
               to={item.path}
               className={`flex items-center px-4 py-3.5 rounded-xl font-medium transition-all duration-200 group ${isActive(item.path)
-                  ? "bg-primary text-white shadow-md shadow-primary/20"
-                  : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"
+                ? "bg-primary text-white shadow-md shadow-primary/20"
+                : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"
                 }`}
             >
               <span className="relative">
@@ -63,7 +64,7 @@ function NavBar() {
                       {nombre || "Usuario"}
                     </p>
                     <p className="text-[10px] uppercase tracking-wider font-black text-on-surface-variant/60">
-                      Administrador
+                      {rol === "admin" ? "Administrador" : "Empleado"}
                     </p>
                   </div>
                 </div>

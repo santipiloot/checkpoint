@@ -5,7 +5,16 @@ export const generarReporteGeneral = async (filtros) => {
     const { desde, hasta, tipo, motivo } = filtros;
 
     const fechaDesde = desde;
-    const fechaHasta = hasta || new Date().toISOString();
+    let fechaHasta = hasta;
+
+    if (fechaHasta) {
+        // Asegurar que la fecha 'hasta' sea inclusiva del día completo
+        if (fechaHasta.length <= 10) { // Formato YYYY-MM-DD
+            fechaHasta = `${fechaHasta}T23:59:59.999Z`;
+        }
+    } else {
+        fechaHasta = new Date().toISOString();
+    }
 
     const [
         topVendidos,

@@ -117,7 +117,7 @@ function FormUsuario({ isOpen, onClose, onUserCreated }) {
 
             <div className="space-y-2 group">
               <label className="text-xs font-semibold uppercase tracking-wider text-[#434655] font-inter ml-1">
-                Contraseña Temporal
+                Contraseña
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">

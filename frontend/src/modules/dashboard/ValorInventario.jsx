@@ -13,11 +13,11 @@ function ValorInventario({ valor, loading }) {
       <div className="p-4 bg-green-50 text-green-600 rounded-2xl group-hover:bg-green-600 group-hover:text-white transition-colors">
         <Wallet className="w-8 h-8" />
       </div>
-      <div>
-        <p className="text-sm font-bold text-[#737686] uppercase tracking-wider">
+      <div className="min-w-0">
+        <p className="text-sm font-bold text-[#737686] uppercase tracking-wider truncate">
           Valor del inventario
         </p>
-        <p className="text-3xl font-black text-[#191c1e] font-manrope">
+        <p className="text-2xl font-black text-[#191c1e] font-manrope truncate" title={!loading ? formatCurrency(valor) : ""}>
           {loading ? (
             <span className="animate-pulse">...</span>
           ) : (

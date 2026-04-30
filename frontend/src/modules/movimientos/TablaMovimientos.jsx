@@ -99,9 +99,6 @@ function TablaMovimientos() {
               <History className="w-10 h-10 text-[#004ac6]" />
               Historial de Movimientos
             </h1>
-            <p className="text-[#434655] text-lg">
-              Registro detallado de entradas y salidas de mercadería.
-            </p>
           </div>
 
           <div className="flex items-center gap-3">
@@ -118,10 +115,11 @@ function TablaMovimientos() {
             </div>
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className={`p-2 rounded-xl border transition-all ${showFilters || filters.tipo || filters.desde || filters.hasta
+              className={`p-2 rounded-xl border transition-all ${
+                showFilters || filters.tipo || filters.desde || filters.hasta
                   ? "bg-[#004ac6] border-[#004ac6] text-white shadow-md shadow-[#004ac6]/20"
                   : "bg-white border-[#eceef0] text-[#434655] hover:bg-[#f7f9fb]"
-                }`}
+              }`}
             >
               <Filter className="w-5 h-5" />
             </button>
@@ -183,7 +181,7 @@ function TablaMovimientos() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl border border-white shadow-sm flex items-center gap-4 transition-all hover:shadow-md">
             <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center text-green-600">
               <ArrowDownLeft className="w-6 h-6" />
@@ -207,6 +205,17 @@ function TablaMovimientos() {
             </div>
           </div>
           <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl border border-white shadow-sm flex items-center gap-4 transition-all hover:shadow-md">
+            <div className="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center text-indigo-600">
+              <History className="w-6 h-6" />
+            </div>
+            <div>
+              <p className="text-sm text-[#737686] font-medium">Ajustes</p>
+              <h3 className="text-2xl font-bold text-[#191c1e]">
+                {movimientos.filter((m) => m.tipo === "ajuste").length}
+              </h3>
+            </div>
+          </div>
+          <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl border border-white shadow-sm flex items-center gap-4 transition-all hover:shadow-md">
             <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center text-[#004ac6]">
               <Package className="w-6 h-6" />
             </div>
@@ -215,7 +224,10 @@ function TablaMovimientos() {
                 Items Movidos
               </p>
               <h3 className="text-2xl font-bold text-[#191c1e]">
-                {movimientos.reduce((acc, curr) => acc + Math.abs(curr.cantidad), 0)}
+                {movimientos.reduce(
+                  (acc, curr) => acc + Math.abs(curr.cantidad),
+                  0,
+                )}
               </h3>
             </div>
           </div>
@@ -280,12 +292,13 @@ function TablaMovimientos() {
                     </td>
                     <td className="px-8 py-5">
                       <span
-                        className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-tight ${movimiento.tipo === "entrada"
+                        className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-tight ${
+                          movimiento.tipo === "entrada"
                             ? "bg-green-100 text-green-700"
                             : movimiento.tipo === "salida"
                               ? "bg-red-100 text-red-700"
                               : "bg-indigo-100 text-indigo-700"
-                          }`}
+                        }`}
                       >
                         {movimiento.tipo === "entrada" ? (
                           <ArrowDownLeft className="w-3 h-3" />

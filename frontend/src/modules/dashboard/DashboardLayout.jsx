@@ -3,6 +3,7 @@ import { useAuth } from "../../context/AuthContext.jsx";
 import AlertasStock from "./AlertasStock.jsx";
 import PerdidasRecientes from "./PerdidasRecientes.jsx";
 import ValorInventario from "./ValorInventario.jsx";
+import MovimientosRecientes from "./MovimientosRecientes.jsx";
 import FlujoSemanal from "./FlujoSemanal.jsx";
 import { LayoutDashboard } from "lucide-react";
 
@@ -99,7 +100,7 @@ function DashboardLayout() {
               Dashboard Operativo
             </h1>
             <p className="text-[#737686] font-medium">
-              Resumen de las últimas 24hs y alertas críticas
+              Resumen de los ultimos 7 dias
             </p>
           </div>
         </div>
@@ -111,6 +112,10 @@ function DashboardLayout() {
           />
           <PerdidasRecientes
             perdidas={data.reporteSemanal?.perdidas}
+            loading={loading}
+          />
+          <MovimientosRecientes
+            resumen={data.reporteSemanal?.kpis?.resumen_movimientos}
             loading={loading}
           />
         </div>

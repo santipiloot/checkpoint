@@ -100,7 +100,7 @@ function DashboardLayout() {
               Dashboard Operativo
             </h1>
             <p className="text-[#737686] font-medium">
-              Resumen de las últimas 24hs y alertas críticas
+              Resumen de los ultimos 7 dias
             </p>
           </div>
         </div>

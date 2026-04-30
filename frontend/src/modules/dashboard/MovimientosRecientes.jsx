@@ -2,7 +2,9 @@ import React from "react";
 import { Activity } from "lucide-react";
 
 function MovimientosRecientes({ resumen, loading }) {
-  const totalMovimientos = resumen?.reduce((acc, curr) => acc + parseInt(curr.total_movimientos), 0) || 0;
+  const totalMovimientos =
+    resumen?.reduce((acc, curr) => acc + parseInt(curr.total_movimientos), 0) ||
+    0;
 
   return (
     <div className="bg-white p-6 rounded-3xl border border-[#eceef0] shadow-sm flex items-center gap-5 transition-all hover:shadow-md group">
@@ -11,9 +13,12 @@ function MovimientosRecientes({ resumen, loading }) {
       </div>
       <div className="min-w-0">
         <p className="text-sm font-bold text-[#737686] uppercase tracking-wider truncate">
-          Movimientos (7 días)
+          Movimientos
         </p>
-        <p className="text-2xl font-black text-[#191c1e] font-manrope truncate" title={!loading ? totalMovimientos : ""}>
+        <p
+          className="text-2xl font-black text-[#191c1e] font-manrope truncate"
+          title={!loading ? totalMovimientos : ""}
+        >
           {loading ? (
             <span className="animate-pulse">...</span>
           ) : (

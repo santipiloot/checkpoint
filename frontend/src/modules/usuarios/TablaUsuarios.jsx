@@ -3,28 +3,23 @@ import { Link } from "react-router";
 import { useEffect, useState, useCallback } from "react";
 import { useAuth } from "../../context/AuthContext.jsx";
 import FormUsuario from "./FormUsuario.jsx";
-import {
-  Users,
-  UserPlus,
-  MoreHorizontal,
-  Edit3,
-  Trash2,
-  Eye,
-  RefreshCcw,
-} from "lucide-react";
+import { Users, UserPlus, Edit3, Trash2, Eye, RefreshCcw } from "lucide-react";
 
 function TablaUsuarios() {
   const { fetchAuth } = useAuth();
   const [usuarios, setUsuarios] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [filtro, setFiltro] = useState("activos"); // 'activos' o 'inactivos'
+  const [filtro, setFiltro] = useState("activos");
 
   const handleDesactivar = async (id) => {
     if (window.confirm("¿Está seguro de desactivar a este usuario?")) {
       try {
-        const response = await fetchAuth(`http://localhost:3000/usuarios/${id}`, {
-          method: "DELETE",
-        });
+        const response = await fetchAuth(
+          `http://localhost:3000/usuarios/${id}`,
+          {
+            method: "DELETE",
+          },
+        );
 
         const data = await response.json();
 
@@ -43,9 +38,12 @@ function TablaUsuarios() {
   const handleReactivar = async (id) => {
     if (window.confirm("¿Está seguro de reactivar a este usuario?")) {
       try {
-        const response = await fetchAuth(`http://localhost:3000/usuarios/${id}/reactivar`, {
-          method: "PATCH",
-        });
+        const response = await fetchAuth(
+          `http://localhost:3000/usuarios/${id}/reactivar`,
+          {
+            method: "PATCH",
+          },
+        );
 
         const data = await response.json();
 
@@ -106,19 +104,21 @@ function TablaUsuarios() {
         <div className="flex items-center gap-4 p-1 bg-surface-container-low rounded-2xl w-fit">
           <button
             onClick={() => setFiltro("activos")}
-            className={`px-6 py-2 rounded-xl text-sm font-bold transition-all ${filtro === "activos"
-              ? "bg-white text-primary shadow-sm"
-              : "text-on-surface-variant hover:text-on-surface"
-              }`}
+            className={`px-6 py-2 rounded-xl text-sm font-bold transition-all ${
+              filtro === "activos"
+                ? "bg-white text-primary shadow-sm"
+                : "text-on-surface-variant hover:text-on-surface"
+            }`}
           >
             Activos
           </button>
           <button
             onClick={() => setFiltro("inactivos")}
-            className={`px-6 py-2 rounded-xl text-sm font-bold transition-all ${filtro === "inactivos"
-              ? "bg-white text-primary shadow-sm"
-              : "text-on-surface-variant hover:text-on-surface"
-              }`}
+            className={`px-6 py-2 rounded-xl text-sm font-bold transition-all ${
+              filtro === "inactivos"
+                ? "bg-white text-primary shadow-sm"
+                : "text-on-surface-variant hover:text-on-surface"
+            }`}
           >
             Inactivos
           </button>
@@ -187,7 +187,7 @@ function TablaUsuarios() {
                     </td>
                     <td className="px-8 py-5 text-right w-40">
                       <div className="flex justify-end items-center h-10 w-full">
-                        <div className="hidden group-hover:flex items-center gap-2">
+                        <div className="flex items-center gap-2">
                           <Link
                             to={`/usuarios/${usuario.id}`}
                             className="p-2 text-[#737686] hover:text-[#004ac6] hover:bg-[#dbe1ff] rounded-lg transition-all"
@@ -219,9 +219,6 @@ function TablaUsuarios() {
                               <RefreshCcw className="w-5 h-5" />
                             </button>
                           )}
-                        </div>
-                        <div className="flex group-hover:hidden items-center justify-center w-10 h-10 text-[#737686]">
-                          <MoreHorizontal className="w-5 h-5" />
                         </div>
                       </div>
                     </td>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2, RefreshCcw } from "lucide-react";
 import { useAuth } from "../../context/AuthContext.jsx";
 
 export default function TarjetaProveedores({ proveedor, onUpdate }) {
@@ -14,22 +14,52 @@ export default function TarjetaProveedores({ proveedor, onUpdate }) {
 
   const handleEliminar = async (id) => {
     if (window.confirm("¿Desea desactivar este proveedor?")) {
-      const response = await fetchAuth(
-        `http://localhost:3000/proveedores/${id}`,
-        {
-          method: "DELETE",
-        },
-      );
+      try {
+        const response = await fetchAuth(
+          `http://localhost:3000/proveedores/${id}`,
+          {
+            method: "DELETE",
+          },
+        );
 
-      const data = await response.json();
+        const data = await response.json();
 
-      if (!response.ok || !data.success) {
-        console.log("Hubo un error: ", data.error);
-        return;
+        if (!response.ok || !data.success) {
+          console.log("Hubo un error: ", data.error);
+          return;
+        }
+
+        if (onUpdate) {
+          await onUpdate();
+        }
+      } catch (error) {
+        console.error("Error al desactivar el proveedor:", error);
       }
+    }
+  };
 
-      if (onUpdate) {
-        await onUpdate();
+  const handleReactivar = async (id) => {
+    if (window.confirm("¿Desea reactivar este proveedor?")) {
+      try {
+        const response = await fetchAuth(
+          `http://localhost:3000/proveedores/${id}/reactivar`,
+          {
+            method: "PATCH",
+          },
+        );
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          console.log("Hubo un error: ", data.error);
+          return;
+        }
+
+        if (onUpdate) {
+          await onUpdate();
+        }
+      } catch (error) {
+        console.error("Error al reactivar el proveedor:", error);
       }
     }
   };
@@ -58,12 +88,21 @@ export default function TarjetaProveedores({ proveedor, onUpdate }) {
               <Pencil className="w-5 h-5" />
             </button>
           </Link>
-          <button
-            onClick={() => handleEliminar(proveedor.id)}
-            className="p-2 text-red-500 hover:bg-red-50 rounded-full transition-colors"
-          >
-            <Trash2 className="w-5 h-5" />
-          </button>
+          {proveedor.activo ? (
+            <button
+              onClick={() => handleEliminar(proveedor.id)}
+              className="p-2 text-red-500 hover:bg-red-50 rounded-full transition-colors"
+            >
+              <Trash2 className="w-5 h-5" />
+            </button>
+          ) : (
+            <button
+              onClick={() => handleReactivar(proveedor.id)}
+              className="p-2 text-green-500 hover:bg-green-50 rounded-full transition-colors"
+            >
+              <RefreshCcw className="w-5 h-5" />
+            </button>
+          )}
         </div>
       </div>
 

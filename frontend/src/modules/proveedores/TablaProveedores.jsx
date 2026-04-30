@@ -7,10 +7,12 @@ import { Plus } from "lucide-react";
 function TablaProveedores() {
   const { fetchAuth } = useAuth();
   const [proveedores, setProveedores] = useState([]);
+  const [filtro, setFiltro] = useState("activos"); // 'activos' o 'inactivos'
 
   const fetchProveedores = useCallback(async () => {
     try {
-      const response = await fetchAuth("http://localhost:3000/proveedores");
+      const url = `http://localhost:3000/proveedores${filtro === "inactivos" ? "?inactivos=true" : ""}`;
+      const response = await fetchAuth(url);
 
       if (!response.ok) {
         const text = await response.text();
@@ -23,7 +25,7 @@ function TablaProveedores() {
     } catch (error) {
       console.error("Error al buscar proveedores:", error);
     }
-  }, [fetchAuth]);
+  }, [fetchAuth, filtro]);
 
   useEffect(() => {
     fetchProveedores();
@@ -49,6 +51,27 @@ function TablaProveedores() {
           </button>
         </Link>
       </header>
+
+      <div className="flex items-center gap-4 p-1 bg-surface-container-low rounded-2xl w-fit">
+        <button
+          onClick={() => setFiltro("activos")}
+          className={`px-6 py-2 rounded-xl text-sm font-bold transition-all ${filtro === "activos"
+            ? "bg-white text-primary shadow-sm"
+            : "text-on-surface-variant hover:text-on-surface"
+            }`}
+        >
+          Activos
+        </button>
+        <button
+          onClick={() => setFiltro("inactivos")}
+          className={`px-6 py-2 rounded-xl text-sm font-bold transition-all ${filtro === "inactivos"
+            ? "bg-white text-primary shadow-sm"
+            : "text-on-surface-variant hover:text-on-surface"
+            }`}
+        >
+          Inactivos
+        </button>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {proveedores.length > 0 ? (

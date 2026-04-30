@@ -3,49 +3,77 @@ import { Link } from "react-router";
 import { useEffect, useState, useCallback } from "react";
 import { useAuth } from "../../context/AuthContext.jsx";
 import FormUsuario from "./FormUsuario.jsx";
-import {
-  Users,
-  UserPlus,
-  MoreHorizontal,
-  Edit3,
-  Trash2,
-  Eye,
-} from "lucide-react";
+import { Users, UserPlus, Edit3, Trash2, Eye, RefreshCcw } from "lucide-react";
 
 function TablaUsuarios() {
   const { fetchAuth } = useAuth();
   const [usuarios, setUsuarios] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [filtro, setFiltro] = useState("activos");
 
   const handleDesactivar = async (id) => {
     if (window.confirm("¿Está seguro de desactivar a este usuario?")) {
-      const response = await fetchAuth(`http://localhost:3000/usuarios/${id}`, {
-        method: "DELETE",
-      });
+      try {
+        const response = await fetchAuth(
+          `http://localhost:3000/usuarios/${id}`,
+          {
+            method: "DELETE",
+          },
+        );
 
-      const data = await response.json();
+        const data = await response.json();
 
-      if (!response.ok || !data.success) {
-        console.log("Hubo un error: ", data.error);
-        return;
+        if (!response.ok || !data.success) {
+          console.log("Hubo un error: ", data.error);
+          return;
+        }
+
+        await fetchUsuarios();
+      } catch (error) {
+        console.error("Error al desactivar el usuario:", error);
       }
+    }
+  };
 
-      await fetchUsuarios();
+  const handleReactivar = async (id) => {
+    if (window.confirm("¿Está seguro de reactivar a este usuario?")) {
+      try {
+        const response = await fetchAuth(
+          `http://localhost:3000/usuarios/${id}/reactivar`,
+          {
+            method: "PATCH",
+          },
+        );
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          console.log("Hubo un error: ", data.error);
+          return;
+        }
+
+        await fetchUsuarios();
+      } catch (error) {
+        console.error("Error al reactivar el usuario:", error);
+      }
     }
   };
 
   const fetchUsuarios = useCallback(async () => {
-    const response = await fetchAuth("http://localhost:3000/usuarios");
-    const data = await response.json();
+    try {
+      const url = `http://localhost:3000/usuarios${filtro === "inactivos" ? "?inactivos=true" : ""}`;
+      const response = await fetchAuth(url);
+      const data = await response.json();
 
-    console.log("Usuario log; ", data);
-
-    if (!response.ok) {
-      console.log("Hubo un error: ", data.error);
-      return;
+      if (!response.ok) {
+        console.log("Hubo un error: ", data.error);
+        return;
+      }
+      setUsuarios(data.data);
+    } catch (error) {
+      console.error("Error en el fetch de usuarios:", error);
     }
-    setUsuarios(data.data);
-  }, [fetchAuth]);
+  }, [fetchAuth, filtro]);
 
   useEffect(() => {
     fetchUsuarios();
@@ -70,6 +98,29 @@ function TablaUsuarios() {
           >
             <UserPlus className="w-5 h-5" />
             Agregar Usuario
+          </button>
+        </div>
+
+        <div className="flex items-center gap-4 p-1 bg-surface-container-low rounded-2xl w-fit">
+          <button
+            onClick={() => setFiltro("activos")}
+            className={`px-6 py-2 rounded-xl text-sm font-bold transition-all ${
+              filtro === "activos"
+                ? "bg-white text-primary shadow-sm"
+                : "text-on-surface-variant hover:text-on-surface"
+            }`}
+          >
+            Activos
+          </button>
+          <button
+            onClick={() => setFiltro("inactivos")}
+            className={`px-6 py-2 rounded-xl text-sm font-bold transition-all ${
+              filtro === "inactivos"
+                ? "bg-white text-primary shadow-sm"
+                : "text-on-surface-variant hover:text-on-surface"
+            }`}
+          >
+            Inactivos
           </button>
         </div>
 
@@ -136,7 +187,7 @@ function TablaUsuarios() {
                     </td>
                     <td className="px-8 py-5 text-right w-40">
                       <div className="flex justify-end items-center h-10 w-full">
-                        <div className="hidden group-hover:flex items-center gap-2">
+                        <div className="flex items-center gap-2">
                           <Link
                             to={`/usuarios/${usuario.id}`}
                             className="p-2 text-[#737686] hover:text-[#004ac6] hover:bg-[#dbe1ff] rounded-lg transition-all"
@@ -151,16 +202,23 @@ function TablaUsuarios() {
                           >
                             <Edit3 className="w-5 h-5" />
                           </Link>
-                          <button
-                            onClick={() => handleDesactivar(usuario.id)}
-                            className="p-2 text-[#737686] hover:text-[#ba1a1a] hover:bg-[#ffdad6] rounded-lg transition-all"
-                            title="Desactivar"
-                          >
-                            <Trash2 className="w-5 h-5" />
-                          </button>
-                        </div>
-                        <div className="flex group-hover:hidden items-center justify-center w-10 h-10 text-[#737686]">
-                          <MoreHorizontal className="w-5 h-5" />
+                          {usuario.activo ? (
+                            <button
+                              onClick={() => handleDesactivar(usuario.id)}
+                              className="p-2 text-[#737686] hover:text-[#ba1a1a] hover:bg-[#ffdad6] rounded-lg transition-all"
+                              title="Desactivar"
+                            >
+                              <Trash2 className="w-5 h-5" />
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => handleReactivar(usuario.id)}
+                              className="p-2 text-[#737686] hover:text-[#00c64a] hover:bg-[#d5fcde] rounded-lg transition-all"
+                              title="Activar"
+                            >
+                              <RefreshCcw className="w-5 h-5" />
+                            </button>
+                          )}
                         </div>
                       </div>
                     </td>

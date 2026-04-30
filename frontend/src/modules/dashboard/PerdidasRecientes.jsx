@@ -19,7 +19,7 @@ function PerdidasRecientes({ perdidas, loading }) {
       </div>
       <div>
         <p className="text-sm font-bold text-[#737686] uppercase tracking-wider">
-          Salidas (Ultimos 7 días)
+          Perdidas (Ultimos 7 días)
         </p>
         <p className="text-3xl font-black text-[#191c1e] font-manrope">
           {loading ? (

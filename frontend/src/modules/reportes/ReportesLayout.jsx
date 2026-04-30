@@ -56,9 +56,6 @@ function ReportesLayout() {
             <h1 className="text-4xl font-bold font-manrope text-[#191c1e] tracking-tight">
               Reportes de Gestión
             </h1>
-            {/* <p className="text-[#434655] text-lg">
-              Análisis de movimientos y valoración de inventario.
-            </p> */}
           </div>
 
           <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-xl shadow-sm border border-[#eceef0]">

@@ -7,7 +7,7 @@ function NavBar() {
   const location = useLocation();
 
   const navItems = [
-    { name: "Home", path: "/" },
+    { name: "Dashboard", path: "/" },
     { name: "Proveedores", path: "/proveedores" },
     { name: "Categorías", path: "/categorias" },
     { name: "Usuarios", path: "/usuarios" },
@@ -34,24 +34,25 @@ function NavBar() {
         </div>
 
         <nav className="flex-1 px-4 space-y-1">
-          {isAuthenticated && navItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`flex items-center px-4 py-3.5 rounded-xl font-medium transition-all duration-200 group ${
-                isActive(item.path)
-                  ? "bg-primary text-white shadow-md shadow-primary/20"
-                  : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"
-              }`}
-            >
-              <span className="relative">
-                {item.name}
-                {isActive(item.path) && (
-                  <span className="absolute -left-2 top-1/2 -translate-y-1/2 w-1 h-4 bg-white/40 rounded-full" />
-                )}
-              </span>
-            </Link>
-          ))}
+          {isAuthenticated &&
+            navItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`flex items-center px-4 py-3.5 rounded-xl font-medium transition-all duration-200 group ${
+                  isActive(item.path)
+                    ? "bg-primary text-white shadow-md shadow-primary/20"
+                    : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"
+                }`}
+              >
+                <span className="relative">
+                  {item.name}
+                  {isActive(item.path) && (
+                    <span className="absolute -left-2 top-1/2 -translate-y-1/2 w-1 h-4 bg-white/40 rounded-full" />
+                  )}
+                </span>
+              </Link>
+            ))}
         </nav>
 
         <div className="p-4 mt-auto">

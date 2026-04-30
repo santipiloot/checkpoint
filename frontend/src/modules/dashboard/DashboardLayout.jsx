@@ -7,7 +7,7 @@ import FlujoSemanal from "./FlujoSemanal.jsx";
 import { LayoutDashboard } from "lucide-react";
 
 function DashboardLayout() {
-  const { fetchAuth } = useAuth();
+  const { isAuthenticated, rol, fetchAuth } = useAuth();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState({
     stockCritico: [],
@@ -15,6 +15,7 @@ function DashboardLayout() {
   });
 
   const fetchData = useCallback(async () => {
+    if (!isAuthenticated || rol !== "admin") return;
     setLoading(true);
     try {
       const hoy = new Date();
@@ -47,6 +48,46 @@ function DashboardLayout() {
     fetchData();
   }, [fetchData]);
 
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-[#f7f9fb] flex flex-col items-center justify-center p-8 font-inter">
+        <div className="bg-white p-10 rounded-3xl shadow-xl shadow-blue-100 border border-[#eceef0] text-center max-w-md">
+          <div className="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <LayoutDashboard className="w-10 h-10 text-[#004ac6]" />
+          </div>
+          <h1 className="text-3xl font-bold text-[#191c1e] mb-4 font-manrope">
+            Inicia sesión
+          </h1>
+          <p className="text-[#737686] mb-8 leading-relaxed">
+            Debes iniciar sesion para poder acceder a la aplicacipn
+          </p>
+          <a
+            href="/login"
+            className="inline-block bg-[#004ac6] text-white px-8 py-3 rounded-xl font-bold shadow-lg shadow-blue-200 hover:bg-[#003da5] transition-all transform hover:-translate-y-0.5"
+          >
+            Ir al Login
+          </a>
+        </div>
+      </div>
+    );
+  }
+
+  if (rol !== "admin") {
+    return (
+      <div className="min-h-screen bg-[#f7f9fb] flex flex-col items-center justify-center p-8 font-inter">
+        <div className="bg-white p-10 rounded-3xl shadow-xl shadow-blue-100 border border-[#eceef0] text-center max-w-md">
+          <h1 className="text-3xl font-bold text-[#191c1e] mb-4 font-manrope">
+            Bienvenido, {rol}
+          </h1>
+          <p className="text-[#737686] mb-8 leading-relaxed">
+            Tu perfil no tiene acceso al dashboard administrativo.
+          </p>
+          {/* <Navigate to="/productos/emp" /> */}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#f7f9fb] p-8 font-inter">
       <div className="max-w-7xl mx-auto space-y-8">
@@ -73,15 +114,6 @@ function DashboardLayout() {
             perdidas={data.reporteSemanal?.perdidas}
             loading={loading}
           />
-          <div className="hidden lg:block bg-white p-6 rounded-2xl border border-[#eceef0] shadow-sm">
-            <p className="text-sm font-semibold text-[#737686] mb-1">
-              Estado del Sistema
-            </p>
-            <div className="flex items-center gap-2 text-green-600 font-bold">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              Sincronizado
-            </div>
-          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">

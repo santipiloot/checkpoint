@@ -28,11 +28,11 @@ export const AuthProvider = ({ children }) => {
       if (!response.ok) {
         throw new Error(session.message || session.error);
       }
-
+      console.log(session)
       setToken(session.token);
-      setNombre(session.nombre);
-      setEmail(session.email);
-      setRol(session.rol);
+      setNombre(session.usuario.nombre);
+      setEmail(session.usuario.email);
+      setRol(session.usuario.rol);
       return { success: true };
     } catch (err) {
       setError(err.message);

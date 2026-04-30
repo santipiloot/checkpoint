@@ -189,13 +189,6 @@ function TablaUsuarios() {
                       <div className="flex justify-end items-center h-10 w-full">
                         <div className="flex items-center gap-2">
                           <Link
-                            to={`/usuarios/${usuario.id}`}
-                            className="p-2 text-[#737686] hover:text-[#004ac6] hover:bg-[#dbe1ff] rounded-lg transition-all"
-                            title="Ver detalles"
-                          >
-                            <Eye className="w-5 h-5" />
-                          </Link>
-                          <Link
                             to={`/usuarios/editar/${usuario.id}`}
                             className="p-2 text-[#737686] hover:text-[#004ac6] hover:bg-[#dbe1ff] rounded-lg transition-all"
                             title="Editar usuario"

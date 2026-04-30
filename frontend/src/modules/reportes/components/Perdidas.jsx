@@ -38,19 +38,39 @@ function Perdidas({ data, loading }) {
             </thead>
             <tbody className="divide-y divide-[#eceef0]">
               {data?.length > 0 ? (
-                data.map((item, i) => (
-                  <tr key={i} className="text-sm">
-                    <td className="py-4 font-medium text-[#191c1e] capitalize">
-                      {item.motivo}
+                <>
+                  {data.map((item, i) => (
+                    <tr key={i} className="text-sm">
+                      <td className="py-4 font-medium text-[#191c1e] capitalize">
+                        {item.motivo}
+                      </td>
+                      <td className="py-4 text-right text-[#434655]">
+                        {item.total_unidades}
+                      </td>
+                      <td className="py-4 text-right font-bold text-[#ba1a1a]">
+                        {formatCurrency(item.costo_estimado)}
+                      </td>
+                    </tr>
+                  ))}
+                  <tr className="text-sm font-bold bg-[#f7f9fb]">
+                    <td className="py-4 px-2 text-[#191c1e]">TOTAL</td>
+                    <td className="py-4 text-right text-[#191c1e]">
+                      {data.reduce(
+                        (acc, item) => acc + (Number(item.total_unidades) || 0),
+                        0,
+                      )}
                     </td>
-                    <td className="py-4 text-right text-[#434655]">
-                      {item.total_unidades}
-                    </td>
-                    <td className="py-4 text-right font-bold text-[#ba1a1a]">
-                      {formatCurrency(item.costo_estimado)}
+                    <td className="py-4 text-right text-[#ba1a1a]">
+                      {formatCurrency(
+                        data.reduce(
+                          (acc, item) =>
+                            acc + (Number(item.costo_estimado) || 0),
+                          0,
+                        ),
+                      )}
                     </td>
                   </tr>
-                ))
+                </>
               ) : (
                 <tr>
                   <td colSpan="3" className="py-10 text-center text-[#737686]">

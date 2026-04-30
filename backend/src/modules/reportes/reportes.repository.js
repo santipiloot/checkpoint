@@ -34,12 +34,16 @@ export const getAnalisisPerdidas = async (desde, hasta) => {
         SELECT 
             m.motivo, 
             COUNT(*) as cantidad_operaciones,
-            SUM(m.cantidad) as total_unidades,
-            SUM(m.cantidad * p.precio_costo) as costo_estimado
+            SUM(ABS(m.cantidad)) as total_unidades,
+            SUM(ABS(m.cantidad) * p.precio_costo) as costo_estimado
         FROM movimientos_stock m
         JOIN productos p ON m.producto_id = p.id
         WHERE m.creado_at BETWEEN $1 AND $2 
-          AND (m.motivo = 'daño' OR (m.motivo = 'correccion' AND m.tipo IN ('salida', 'ajuste')))
+          AND (
+              (m.tipo = 'salida' AND m.motivo IN ('daño', 'robo')) 
+              OR 
+              (m.tipo = 'ajuste' AND m.cantidad < 0 AND m.motivo IN ('daño', 'robo', 'correccion'))
+          )
         GROUP BY m.motivo
     `;
     const { rows } = await pool.query(query, [desde, hasta]);
@@ -48,7 +52,7 @@ export const getAnalisisPerdidas = async (desde, hasta) => {
 
 export const getResumenMovimientos = async (desde, hasta, tipo, motivo) => {
     let query = `
-        SELECT tipo, motivo, COUNT(*) as total_movimientos, SUM(cantidad) as total_unidades
+        SELECT motivo, COUNT(*) as total_movimientos, SUM(cantidad) as total_unidades
         FROM movimientos_stock
         WHERE creado_at BETWEEN $1 AND $2
     `;
@@ -63,7 +67,7 @@ export const getResumenMovimientos = async (desde, hasta, tipo, motivo) => {
         query += ` AND motivo = $${params.length}`;
     }
 
-    query += ` GROUP BY tipo, motivo ORDER BY tipo, motivo`;
+    query += ` GROUP BY motivo ORDER BY total_movimientos DESC`;
 
     const { rows } = await pool.query(query, params);
     return rows;

@@ -77,7 +77,6 @@ export const crearMovimiento = async (movimiento) => {
         } else if (movimiento.tipo === 'salida') {
             verificacion = -Math.abs(movimiento.cantidad);
         }
-        // Para 'ajuste', confiamos en el signo que viene del frontend
 
         await client.query(
             "UPDATE productos SET stock = stock + $1 WHERE id = $2",

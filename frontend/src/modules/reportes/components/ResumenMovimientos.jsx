@@ -12,13 +12,15 @@ import { transformarPie } from "../utils/estandarizacionDatos.js";
 function ResumenMovimientos({ data, loading }) {
   const datosGrafico = transformarPie(data);
 
-  const getMotivoColor = (motivo) => {
-    const m = motivo.toLowerCase();
-    if (m === "venta") return "#004ac6"; // Azul Premium
-    if (m === "compra") return "#10b981"; // Verde Éxito
-    if (m === "daño" || m === "robo") return "#ef4444"; // Rojo Alerta
-    if (m === "devolucion") return "#f59e0b"; // Naranja / Ámbar
-    if (m === "correccion") return "#6366f1"; // Índigo
+  const getMotivoColor = (label) => {
+    console.log(`Resumen movimientos: ${label}`);
+    if (label === "Venta") return "#004ac6"; // Azul
+    if (label === "Compra") return "#17c752ff"; // Verde
+    if (label === "Dev. de Cliente") return "#f59e0b"; // Ámbar
+    if (label === "Dev. a Proveedor") return "#fb923c"; // Naranja oscuro
+    if (label === "Robo") return "#ef4444"; // Rojo
+    if (label === "Daño") return "#dc2626"; // Rojo oscuro
+    if (label === "Corrección") return "#6366f1"; // Índigo
     return "#94a3b8"; // Gris por defecto
   };
 

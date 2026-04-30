@@ -38,6 +38,10 @@ function TendenciaChart({ data, loading }) {
                   <stop offset="5%" stopColor="#004ac6" stopOpacity={0.1} />
                   <stop offset="95%" stopColor="#004ac6" stopOpacity={0} />
                 </linearGradient>
+                <linearGradient id="colorAjuste" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#f97316" stopOpacity={0.1} />
+                  <stop offset="95%" stopColor="#f97316" stopOpacity={0} />
+                </linearGradient>
               </defs>
               <CartesianGrid
                 strokeDasharray="3 3"
@@ -80,6 +84,15 @@ function TendenciaChart({ data, loading }) {
                 stroke="#004ac6"
                 fillOpacity={1}
                 fill="url(#colorSalida)"
+                strokeWidth={2}
+              />
+              <Area
+                type="monotone"
+                dataKey="ajuste"
+                name="Ajustes"
+                stroke="#f97316"
+                fillOpacity={1}
+                fill="url(#colorAjuste)"
                 strokeWidth={2}
               />
             </AreaChart>

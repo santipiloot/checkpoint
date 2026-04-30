@@ -1,15 +1,38 @@
 import React from "react";
 import { Link, useNavigate } from "react-router";
 import { Pencil, Trash2 } from "lucide-react";
+import { useAuth } from "../../context/AuthContext.jsx";
 
-export default function TarjetaProveedores({ proveedor }) {
+export default function TarjetaProveedores({ proveedor, onUpdate }) {
   const navigate = useNavigate();
+
+  const { fetchAuth } = useAuth();
 
   const handleCardClick = () => {
     navigate(`/proveedores/${proveedor.id}`);
   };
 
-  const handleEliminar = () => {};
+  const handleEliminar = async (id) => {
+    if (window.confirm("¿Desea desactivar este proveedor?")) {
+      const response = await fetchAuth(
+        `http://localhost:3000/proveedores/${id}`,
+        {
+          method: "DELETE",
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        console.log("Hubo un error: ", data.error);
+        return;
+      }
+
+      if (onUpdate) {
+        await onUpdate();
+      }
+    }
+  };
 
   return (
     <div

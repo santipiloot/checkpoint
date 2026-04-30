@@ -17,11 +17,11 @@ function PerdidasRecientes({ perdidas, loading }) {
       <div className="p-4 bg-red-50 text-red-600 rounded-2xl group-hover:bg-red-600 group-hover:text-white transition-colors">
         <TrendingDown className="w-8 h-8" />
       </div>
-      <div>
-        <p className="text-sm font-bold text-[#737686] uppercase tracking-wider">
+      <div className="min-w-0">
+        <p className="text-sm font-bold text-[#737686] uppercase tracking-wider truncate">
           Perdidas (Ultimos 7 días)
         </p>
-        <p className="text-3xl font-black text-[#191c1e] font-manrope">
+        <p className="text-2xl font-black text-[#191c1e] font-manrope truncate" title={!loading ? `-${formatCurrency(totalPerdidas)}` : ""}>
           {loading ? (
             <span className="animate-pulse">...</span>
           ) : (

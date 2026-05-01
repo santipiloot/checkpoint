@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   AreaChart,
   Area,
@@ -12,7 +12,24 @@ import {
 import { transformarTendencia } from "../utils/estandarizacionDatos.js";
 
 function TendenciaChart({ data, loading }) {
-  const datosGrafico = transformarTendencia(data);
+  const datosTransformados = transformarTendencia(data);
+
+  const datosGrafico = useMemo(() => {
+    if (!datosTransformados || datosTransformados.length === 0) return [];
+    if (datosTransformados.length === 1) {
+      return [
+        {
+          ...datosTransformados[0],
+          fecha: "",
+          entrada: 0,
+          salida: 0,
+          ajuste: 0,
+        },
+        { ...datosTransformados[0] },
+      ];
+    }
+    return datosTransformados;
+  }, [datosTransformados]);
 
   return (
     <div className="bg-white p-6 rounded-2xl shadow-sm border border-[#eceef0] h-[400px] flex flex-col">
@@ -76,6 +93,8 @@ function TendenciaChart({ data, loading }) {
                 fillOpacity={1}
                 fill="url(#colorEntrada)"
                 strokeWidth={2}
+                dot={false}
+                activeDot={{ r: 6 }}
               />
               <Area
                 type="monotone"
@@ -85,6 +104,8 @@ function TendenciaChart({ data, loading }) {
                 fillOpacity={1}
                 fill="url(#colorSalida)"
                 strokeWidth={2}
+                dot={false}
+                activeDot={{ r: 6 }}
               />
               <Area
                 type="monotone"
@@ -94,6 +115,8 @@ function TendenciaChart({ data, loading }) {
                 fillOpacity={1}
                 fill="url(#colorAjuste)"
                 strokeWidth={2}
+                dot={false}
+                activeDot={{ r: 6 }}
               />
             </AreaChart>
           </ResponsiveContainer>

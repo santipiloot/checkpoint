@@ -15,7 +15,7 @@ function TarjetasKPIs({ kpis, loading }) {
 
   const tarjetas = [
     {
-      title: "Valor en inventario",
+      title: "Valor en inventario (Actual)",
       value: formatCurrency(kpis?.valoracion_inventario || 0),
       icon: DollarSign,
       color: "text-[#004ac6]",

@@ -3,10 +3,10 @@ export const transformarTendencia = (data) => {
   if (!data || !Array.isArray(data)) return [];
 
   const agrupado = data.reduce((acc, curr) => {
-    const fecha = new Date(curr.fecha).toLocaleDateString("es-AR", {
-      day: "2-digit",
-      month: "2-digit",
-    });
+    const d = new Date(curr.fecha);
+    const fecha = `${String(d.getUTCDate()).padStart(2, "0")}/${String(
+      d.getUTCMonth() + 1,
+    ).padStart(2, "0")}`;
 
     if (!acc[fecha]) {
       acc[fecha] = { fecha, entrada: 0, salida: 0, ajuste: 0 };

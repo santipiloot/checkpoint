@@ -8,9 +8,9 @@ export const generarReporteGeneral = async (filtros) => {
     let fechaHasta = hasta;
 
     if (fechaHasta) {
-        // Asegurar que la fecha 'hasta' sea inclusiva del día completo
-        if (fechaHasta.length <= 10) { // Formato YYYY-MM-DD
-            fechaHasta = `${fechaHasta}T23:59:59.999Z`;
+        
+        if (fechaHasta.length <= 10) { 
+            fechaHasta = `${fechaHasta} 23:59:59`;
         }
     } else {
         fechaHasta = new Date().toISOString();

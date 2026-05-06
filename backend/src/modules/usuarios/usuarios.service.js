@@ -16,6 +16,13 @@ export const obtenerUsuario = async (id) => {
 }
 
 export const editarUsuario = async (id, data) => {
+    const validarUsuario = await usuarioRepository.validarEdicionUsuario(id, data.email);
+    if (validarUsuario) {
+        const error = new Error("Ya existe un usuario con este email");
+        error.statusCode = 400;
+        throw error;
+    }
+    
     const usuarioActualizado = await usuarioRepository.editarUsuario(id, data);
     if (!usuarioActualizado) {
         const error = new Error("Usuario no encontrado");

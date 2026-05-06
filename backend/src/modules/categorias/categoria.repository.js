@@ -35,3 +35,13 @@ export const reactivarCategoria = async (id) => {
     const { rows } = await pool.query("UPDATE categorias SET activo = true WHERE id = $1 RETURNING *", [id]);
     return rows[0];
 }
+
+export const validarCategoria = async (nombre) => {
+    const { rows } = await pool.query("SELECT * FROM categorias WHERE nombre = $1", [nombre]);
+    return rows[0];
+}
+
+export const validarEdicionCategoria = async (id, nombre) => {
+    const { rows } = await pool.query("SELECT * FROM categorias WHERE nombre = $1 AND id != $2", [nombre, id]);
+    return rows[0];
+}

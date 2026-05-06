@@ -10,6 +10,7 @@ function EditUsuarios() {
 
   const [values, setValues] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [errores, setErrores] = useState(null);
 
   const onClose = () => navigate("/usuarios");
 
@@ -19,7 +20,7 @@ function EditUsuarios() {
 
     if (!response.ok || !data.success) {
       if (response.status === 400) {
-        console.log("hubo un error: ", data.error);
+        setErrores(data.errores);
         return;
       }
     }
@@ -112,7 +113,18 @@ function EditUsuarios() {
                   onChange={(e) =>
                     setValues({ ...values, nombre: e.target.value })
                   }
+                  aria-invalid={
+                    errores && errores.some((e) => e.path === "nombre")
+                  }
                 />
+                {errores && (
+                  <small className="text-red-500 text-xs">
+                    {errores
+                      .filter((e) => e.path == "nombre")
+                      .map((e) => e.msg)
+                      .join(", ")}
+                  </small>
+                )}
               </div>
             </div>
 
@@ -133,7 +145,18 @@ function EditUsuarios() {
                   onChange={(e) =>
                     setValues({ ...values, email: e.target.value })
                   }
+                  aria-invalid={
+                    errores && errores.some((e) => e.path === "email")
+                  }
                 />
+                {errores && (
+                  <small className="text-red-500 text-xs">
+                    {errores
+                      .filter((e) => e.path == "email")
+                      .map((e) => e.msg)
+                      .join(", ")}
+                  </small>
+                )}
               </div>
             </div>
 

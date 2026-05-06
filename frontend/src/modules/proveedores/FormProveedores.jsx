@@ -6,6 +6,7 @@ import { useAuth } from "../../context/AuthContext.jsx";
 function FormProveedores() {
   const navigate = useNavigate();
   const { fetchAuth } = useAuth();
+  const [errores, setErrores] = useState(null);
 
   const initialValues = {
     nombre: "",
@@ -29,12 +30,13 @@ function FormProveedores() {
 
     if (!response.ok || !data.success) {
       if (response.status === 400) {
-        console.log("Hubo un error: ", data.error);
+        setErrores(data.errores);
+        return;
       }
     }
 
-    setValues(initialValues);
     navigate("/proveedores");
+    setValues(initialValues);
   };
 
   const inputClasses =
@@ -66,7 +68,16 @@ function FormProveedores() {
               className={inputClasses}
               value={values.nombre}
               onChange={(e) => setValues({ ...values, nombre: e.target.value })}
+              aria-invalid={errores && errores.some((e) => e.path === "nombre")}
             />
+            {errores && (
+              <small className="text-red-500 text-xs">
+                {errores
+                  .filter((e) => e.path == "nombre")
+                  .map((e) => e.msg)
+                  .join(", ")}
+              </small>
+            )}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -81,7 +92,18 @@ function FormProveedores() {
                 onChange={(e) =>
                   setValues({ ...values, email: e.target.value })
                 }
+                aria-invalid={
+                  errores && errores.some((e) => e.path === "email")
+                }
               />
+              {errores && (
+                <small className="text-red-500 text-xs">
+                  {errores
+                    .filter((e) => e.path == "email")
+                    .map((e) => e.msg)
+                    .join(", ")}
+                </small>
+              )}
             </div>
             <div>
               <label className={labelClasses}>Teléfono</label>
@@ -93,7 +115,18 @@ function FormProveedores() {
                 onChange={(e) =>
                   setValues({ ...values, telefono: e.target.value })
                 }
+                aria-invalid={
+                  errores && errores.some((e) => e.path === "telefono")
+                }
               />
+              {errores && (
+                <small className="text-red-500 text-xs">
+                  {errores
+                    .filter((e) => e.path == "telefono")
+                    .map((e) => e.msg)
+                    .join(", ")}
+                </small>
+              )}
             </div>
           </div>
 

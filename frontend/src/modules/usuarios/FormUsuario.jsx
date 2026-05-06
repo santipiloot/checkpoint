@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { X, UserPlus, Mail, Lock, ShieldCheck } from "lucide-react";
+import toast from "react-hot-toast";
 
 function FormUsuario({ isOpen, onClose, onUserCreated }) {
   const { fetchAuth } = useAuth();
@@ -15,6 +16,7 @@ function FormUsuario({ isOpen, onClose, onUserCreated }) {
 
   const [values, setValues] = useState(initialValues);
   const [loading, setLoading] = useState(false);
+  const [errores, setErrores] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +32,8 @@ function FormUsuario({ isOpen, onClose, onUserCreated }) {
       const data = await response.json();
 
       if (!response.ok || !data.success) {
-        console.log("Hubo un error: ", data.error);
+        toast.error(data.message || "Hubo un error al registrar el usuario");
+        if (data.errores) setErrores(data.errores);
         return;
       }
 
@@ -90,7 +93,18 @@ function FormUsuario({ isOpen, onClose, onUserCreated }) {
                   onChange={(e) =>
                     setValues({ ...values, nombre: e.target.value })
                   }
+                  aria-invalid={
+                    errores && errores.some((e) => e.path === "nombre")
+                  }
                 />
+                {errores && (
+                  <small className="text-red-500 text-xs">
+                    {errores
+                      .filter((e) => e.path == "nombre")
+                      .map((e) => e.msg)
+                      .join(", ")}
+                  </small>
+                )}
               </div>
             </div>
 
@@ -111,7 +125,18 @@ function FormUsuario({ isOpen, onClose, onUserCreated }) {
                   onChange={(e) =>
                     setValues({ ...values, email: e.target.value })
                   }
+                  aria-invalid={
+                    errores && errores.some((e) => e.path === "email")
+                  }
                 />
+                {errores && (
+                  <small className="text-red-500 text-xs">
+                    {errores
+                      .filter((e) => e.path == "email")
+                      .map((e) => e.msg)
+                      .join(", ")}
+                  </small>
+                )}
               </div>
             </div>
 
@@ -132,7 +157,18 @@ function FormUsuario({ isOpen, onClose, onUserCreated }) {
                   onChange={(e) =>
                     setValues({ ...values, password: e.target.value })
                   }
+                  aria-invalid={
+                    errores && errores.some((e) => e.path === "password")
+                  }
                 />
+                {errores && (
+                  <small className="text-red-500 text-xs">
+                    {errores
+                      .filter((e) => e.path == "password")
+                      .map((e) => e.msg)
+                      .join(", ")}
+                  </small>
+                )}
               </div>
             </div>
 

@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { Link, Outlet, useLocation } from "react-router";
 import { useAuth } from "../../context/AuthContext.jsx";
-import { 
-  LayoutDashboard, 
-  Package, 
-  Truck, 
-  Tags, 
-  Users, 
-  ArrowLeftRight, 
+import {
+  LayoutDashboard,
+  Package,
+  Truck,
+  Tags,
+  Users,
+  ArrowLeftRight,
   BarChart3,
   LogOut,
   ChevronLeft,
   ChevronRight,
   User,
-  LogIn
+  LogIn,
 } from "lucide-react";
 
 function NavBar() {
@@ -38,12 +38,11 @@ function NavBar() {
 
   return (
     <div className="flex min-h-screen bg-surface font-inter text-on-surface">
-      <aside 
+      <aside
         className={`${
           isCollapsed ? "w-20" : "w-72"
         } bg-surface-container-low flex flex-col fixed h-full shadow-sm z-20 transition-all duration-300 ease-in-out`}
       >
-        {/* Toggle Button */}
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
           className="absolute -right-3 top-10 bg-primary text-white p-1 rounded-full shadow-lg hover:scale-110 transition-transform z-30"
@@ -85,9 +84,7 @@ function NavBar() {
                 >
                   <Icon size={22} className={`${!isCollapsed && "mr-3"}`} />
                   {!isCollapsed && (
-                    <span className="truncate">
-                      {item.name}
-                    </span>
+                    <span className="truncate">{item.name}</span>
                   )}
                   {isActive(item.path) && !isCollapsed && (
                     <span className="absolute -left-1 top-1/2 -translate-y-1/2 w-1 h-4 bg-white/40 rounded-full" />
@@ -101,11 +98,17 @@ function NavBar() {
         </nav>
 
         <div className="p-3 mt-auto">
-          <div className={`bg-surface-container-lowest rounded-2xl ${isCollapsed ? "p-2" : "p-4"} shadow-ambient space-y-4 overflow-hidden`}>
+          <div
+            className={`bg-surface-container-lowest rounded-2xl ${isCollapsed ? "p-2" : "p-4"} shadow-ambient space-y-4 overflow-hidden`}
+          >
             {isAuthenticated ? (
               <>
-                <div className={`flex items-center ${isCollapsed ? "justify-center" : "space-x-3"}`}>
-                  <div className={`w-10 h-10 min-w-[40px] rounded-full bg-surface-container-high flex items-center justify-center text-primary`}>
+                <div
+                  className={`flex items-center ${isCollapsed ? "justify-center" : "space-x-3"}`}
+                >
+                  <div
+                    className={`w-10 h-10 min-w-[40px] rounded-full bg-surface-container-high flex items-center justify-center text-primary`}
+                  >
                     <User size={20} />
                   </div>
                   {!isCollapsed && (
@@ -146,7 +149,7 @@ function NavBar() {
         </div>
       </aside>
 
-      <main 
+      <main
         className={`flex-1 ${
           isCollapsed ? "ml-20" : "ml-72"
         } min-h-screen transition-all duration-300 ease-in-out`}
@@ -160,4 +163,3 @@ function NavBar() {
 }
 
 export default NavBar;
-

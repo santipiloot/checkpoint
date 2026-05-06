@@ -116,3 +116,23 @@ export const obtenerVentasUltimos30Dias = async (producto_id) => {
     );
     return parseFloat(rows[0].total);
 }
+
+export const validarProducto = async (codigo_barras) => {
+    const { rows } = await pool.query("SELECT * FROM productos WHERE codigo_barras = $1", [codigo_barras]);
+    return rows[0];
+}
+
+export const validarEdicionProducto = async (id, codigo_barras) => {
+    const { rows } = await pool.query("SELECT * FROM productos WHERE codigo_barras = $1 AND id != $2", [codigo_barras, id]);
+    return rows[0];
+}
+
+export const validarNombreProducto = async (nombre) => {
+    const { rows } = await pool.query("SELECT * FROM productos WHERE nombre = $1", [nombre]);
+    return rows[0];
+}
+
+export const validarNombreEdicionProducto = async (id, nombre) => {
+    const { rows } = await pool.query("SELECT * FROM productos WHERE nombre = $1 AND id != $2", [nombre, id]);
+    return rows[0];
+}

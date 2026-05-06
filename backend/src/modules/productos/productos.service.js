@@ -27,11 +27,43 @@ export const obtenerProductoPorId = async (id) => {
 };
 
 export const crearProducto = async (producto) => {
+
+    const validarCodigoProducto = await productosRepository.validarProducto(producto.codigo_barras);
+
+    if (validarCodigoProducto) {
+        const error = new Error("Ya existe un producto con este codigo de barras");
+        error.statusCode = 400;
+        throw error;
+    }
+
+    const validarNombreProducto = await productosRepository.validarNombreProducto(producto.nombre);
+
+    if (validarNombreProducto) {
+        const error = new Error("Ya existe un producto con este nombre");
+        error.statusCode = 400;
+        throw error;
+    }
+
     const nuevoProducto = await productosRepository.crearProducto(producto);
     return nuevoProducto;
 };
 
 export const actualizarProducto = async (id, producto) => {
+    const validarCodigoProducto = await productosRepository.validarEdicionProducto(id, producto.codigo_barras);
+
+    if (validarCodigoProducto) {
+        const error = new Error("Ya existe un producto con este codigo de barras");
+        error.statusCode = 400;
+        throw error;
+    }
+
+    const validarNombreProducto = await productosRepository.validarNombreEdicionProducto(id, producto.nombre);
+
+    if (validarNombreProducto) {
+        const error = new Error("Ya existe un producto con este nombre");
+        error.statusCode = 400;
+        throw error;
+    }
     const productoActualizado = await productosRepository.actualizarProducto(id, producto);
 
     if (!productoActualizado) {

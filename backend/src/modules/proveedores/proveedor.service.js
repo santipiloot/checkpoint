@@ -16,12 +16,56 @@ export const obtenerProveedorPorId = async (id) => {
 }
 
 export const crearProveedor = async (datos) => {
+
+    const validarNombreProveedor = await proveedorRepository.validarProveedor(datos.nombre);
+    if (validarNombreProveedor) {
+        const error = new Error("Ya existe un proveedor con este nombre");
+        error.statusCode = 400;
+        throw error;
+    }
+
+    const validarEmailProveedor = await proveedorRepository.validarEmailProveedor(datos.email);
+    if (validarEmailProveedor) {
+        const error = new Error("Ya existe un proveedor con este email");
+        error.statusCode = 400;
+        throw error;
+    }
+
+    const validarTelefonoProveedor = await proveedorRepository.validarTelefonoProveedor(datos.telefono);
+    if (validarTelefonoProveedor) {
+        const error = new Error("Ya existe un proveedor con este telefono");
+        error.statusCode = 400;
+        throw error;
+    }
+
     const { nombre, email, telefono, notas } = datos;
     const nuevoProveedor = await proveedorRepository.crearProveedor(nombre, email, telefono, notas);
     return nuevoProveedor;
 }
 
 export const actualizarProveedor = async (id, datos) => {
+
+    const validarNombreProveedor = await proveedorRepository.validarEdicionProveedor(id, datos.nombre);
+    if (validarNombreProveedor) {
+        const error = new Error("Ya existe un proveedor con este nombre");
+        error.statusCode = 400;
+        throw error;
+    }
+
+    const validarEmailProveedor = await proveedorRepository.validarEmailEdicionProveedor(id, datos.email);
+    if (validarEmailProveedor) {
+        const error = new Error("Ya existe un proveedor con este email");
+        error.statusCode = 400;
+        throw error;
+    }
+
+    const validarTelefonoProveedor = await proveedorRepository.validarTelefonoEdicionProveedor(id, datos.telefono);
+    if (validarTelefonoProveedor) {
+        const error = new Error("Ya existe un proveedor con este telefono");
+        error.statusCode = 400;
+        throw error;
+    }
+    
     const { nombre, email, telefono, notas } = datos;
     const proveedorActualizado = await proveedorRepository.actualizarProveedor(id, nombre, email, telefono, notas);
 

@@ -41,3 +41,33 @@ export const reactivarProveedor = async (id) => {
     const { rows } = await pool.query("UPDATE proveedores SET activo = true WHERE id = $1 RETURNING *", [id]);
     return rows[0];
 }
+
+export const validarProveedor = async (nombre) => {
+    const { rows } = await pool.query("SELECT * FROM proveedores WHERE nombre = $1", [nombre]);
+    return rows[0];
+}
+
+export const validarEdicionProveedor = async (id, nombre) => {
+    const { rows } = await pool.query("SELECT * FROM proveedores WHERE nombre = $1 AND id != $2", [nombre, id]);
+    return rows[0];
+}
+
+export const validarEmailProveedor = async (email) => {
+    const { rows } = await pool.query("SELECT * FROM proveedores WHERE email = $1", [email]);
+    return rows[0];
+}
+
+export const validarEmailEdicionProveedor = async (id, email) => {
+    const { rows } = await pool.query("SELECT * FROM proveedores WHERE email = $1 AND id != $2", [email, id]);
+    return rows[0];
+}
+
+export const validarTelefonoProveedor = async (telefono) => {
+    const { rows } = await pool.query("SELECT * FROM proveedores WHERE telefono = $1", [telefono]);
+    return rows[0];
+}
+
+export const validarTelefonoEdicionProveedor = async (id, telefono) => {
+    const { rows } = await pool.query("SELECT * FROM proveedores WHERE telefono = $1 AND id != $2", [telefono, id]);
+    return rows[0];
+}

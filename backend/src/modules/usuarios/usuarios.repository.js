@@ -35,3 +35,10 @@ export const reactivarUsuario = async (id) => {
     const res = await pool.query(query, [id]);
     return res.rows[0];
 }
+
+export const validarEdicionUsuario = async (id, email) => {
+    const query = "SELECT id, nombre, email, rol FROM usuarios WHERE email = $1 AND id != $2";
+    const res = await pool.query(query, [email, id]);
+    return res.rows[0];
+}
+

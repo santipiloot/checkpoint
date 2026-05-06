@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { X, Building2, Mail, Phone, FileText } from "lucide-react";
+import toast from "react-hot-toast";
 
 function EditProveedores() {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ function EditProveedores() {
 
   const [values, setValues] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [errores, setErrores] = useState(null);
 
   const onClose = () => navigate("/proveedores");
 
@@ -48,7 +50,8 @@ function EditProveedores() {
       const data = await response.json();
 
       if (!response.ok || !data.success) {
-        console.error("Error al actualizar proveedor:", data.error);
+        toast.error(data.message || "Hubo un error al actualizar el proveedor");
+        if (data.errores) setErrores(data.errores);
         setLoading(false);
         return;
       }
@@ -129,7 +132,18 @@ function EditProveedores() {
                   onChange={(e) =>
                     setValues({ ...values, nombre: e.target.value })
                   }
+                  aria-invalid={
+                    errores && errores.some((e) => e.path === "nombre")
+                  }
                 />
+                {errores && (
+                  <small className="text-red-500 text-xs">
+                    {errores
+                      .filter((e) => e.path == "nombre")
+                      .map((e) => e.msg)
+                      .join(", ")}
+                  </small>
+                )}
               </div>
             </div>
 
@@ -148,7 +162,18 @@ function EditProveedores() {
                   onChange={(e) =>
                     setValues({ ...values, email: e.target.value })
                   }
+                  aria-invalid={
+                    errores && errores.some((e) => e.path === "email")
+                  }
                 />
+                {errores && (
+                  <small className="text-red-500 text-xs">
+                    {errores
+                      .filter((e) => e.path == "email")
+                      .map((e) => e.msg)
+                      .join(", ")}
+                  </small>
+                )}
               </div>
             </div>
 
@@ -166,7 +191,18 @@ function EditProveedores() {
                   onChange={(e) =>
                     setValues({ ...values, telefono: e.target.value })
                   }
+                  aria-invalid={
+                    errores && errores.some((e) => e.path === "telefono")
+                  }
                 />
+                {errores && (
+                  <small className="text-red-500 text-xs">
+                    {errores
+                      .filter((e) => e.path == "telefono")
+                      .map((e) => e.msg)
+                      .join(", ")}
+                  </small>
+                )}
               </div>
             </div>
 
@@ -183,7 +219,18 @@ function EditProveedores() {
                   onChange={(e) =>
                     setValues({ ...values, notas: e.target.value })
                   }
+                  aria-invalid={
+                    errores && errores.some((e) => e.path === "notas")
+                  }
                 />
+                {errores && (
+                  <small className="text-red-500 text-xs">
+                    {errores
+                      .filter((e) => e.path == "notas")
+                      .map((e) => e.msg)
+                      .join(", ")}
+                  </small>
+                )}
               </div>
             </div>
           </form>

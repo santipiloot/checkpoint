@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { X, UserPlus, Mail, Lock, ShieldCheck } from "lucide-react";
+import toast from "react-hot-toast";
 
 function FormUsuario({ isOpen, onClose, onUserCreated }) {
   const { fetchAuth } = useAuth();
@@ -31,7 +32,8 @@ function FormUsuario({ isOpen, onClose, onUserCreated }) {
       const data = await response.json();
 
       if (!response.ok || !data.success) {
-        setErrores(data.errores);
+        toast.error(data.message || "Hubo un error al registrar el usuario");
+        if (data.errores) setErrores(data.errores);
         return;
       }
 

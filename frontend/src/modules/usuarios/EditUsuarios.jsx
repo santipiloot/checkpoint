@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { UserPlus, X, Mail, Lock, ShieldCheck } from "lucide-react";
+import toast from "react-hot-toast";
 
 function EditUsuarios() {
   const navigate = useNavigate();
@@ -44,9 +45,10 @@ function EditUsuarios() {
     const data = await response.json();
 
     if (!response.ok || !data.success) {
-      if (response.status(400)) {
-        console.log("Hubo un error: ", data.error);
-      }
+      toast.error(data.message || "Hubo un error al actualizar el usuario");
+      if (data.errores) setErrores(data.errores);
+      setLoading(false);
+      return;
     }
 
     navigate("/usuarios");

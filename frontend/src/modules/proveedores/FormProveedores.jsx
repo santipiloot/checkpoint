@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "../../context/AuthContext.jsx";
+import toast from "react-hot-toast";
 
 function FormProveedores() {
   const navigate = useNavigate();
@@ -29,10 +30,9 @@ function FormProveedores() {
     const data = await response.json();
 
     if (!response.ok || !data.success) {
-      if (response.status === 400) {
-        setErrores(data.errores);
-        return;
-      }
+      toast.error(data.message || "Hubo un error al guardar el proveedor");
+      if (data.errores) setErrores(data.errores);
+      return;
     }
 
     navigate("/proveedores");

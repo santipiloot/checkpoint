@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { X, Tag, Save } from "lucide-react";
+import toast from "react-hot-toast";
 
 function FormCategorias({ isOpen, onClose, onCategorySaved, editData = null }) {
   const { fetchAuth } = useAuth();
@@ -41,7 +42,8 @@ function FormCategorias({ isOpen, onClose, onCategorySaved, editData = null }) {
       const data = await response.json();
 
       if (!response.ok || !data.success) {
-        console.log("Hubo un error: ", data.error);
+        toast.error(data.message || "Hubo un error al guardar la categoría");
+        if (data.errores) setErrores(data.errores);
         return;
       }
 

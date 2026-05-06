@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { X, Building2, Mail, Phone, FileText } from "lucide-react";
+import toast from "react-hot-toast";
 
 function EditProveedores() {
   const navigate = useNavigate();
@@ -49,7 +50,8 @@ function EditProveedores() {
       const data = await response.json();
 
       if (!response.ok || !data.success) {
-        setErrores(data.errores);
+        toast.error(data.message || "Hubo un error al actualizar el proveedor");
+        if (data.errores) setErrores(data.errores);
         setLoading(false);
         return;
       }

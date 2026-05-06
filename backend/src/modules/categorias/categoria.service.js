@@ -16,11 +16,29 @@ export const obtenerCategoriaPorId = async (id) => {
 }
 
 export const crearCategoria = async (nombre) => {
+
+    const validarCategoria = await categoriaRepository.validarCategoria(nombre);
+    
+    if (validarCategoria) {
+        const error = new Error("Ya existe esta categoria");
+        error.statusCode = 400;
+        throw error;
+        
+    }
+
     const nuevaCategoria = await categoriaRepository.crearCategoria(nombre);
     return nuevaCategoria;
 }
 
 export const actualizarCategoria = async (id, nombre) => {
+    const validarEdicionCategoria = await categoriaRepository.validarEdicionCategoria(id, nombre);
+    
+    if (validarEdicionCategoria) {
+        const error = new Error("Ya existe esta categoria");
+        error.statusCode = 400;
+        throw error;
+    }
+    
     const categoriaActualizada = await categoriaRepository.actualizarCategoria(id, nombre);
 
     if (!categoriaActualizada) {

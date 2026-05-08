@@ -6,13 +6,10 @@ export const initCron = () => {
     // El 0 * * * * es cada hora, para pruebas ponerlo en * * * * * para que se envien cada minuto
     cron.schedule('0 */4 * * *', async () => {
         try {
-            console.log('Ejecutando tarea cron: Verificación de stock crítico');
             await verificarStockCritico();
-            console.log('Tarea cron finalizada con éxito.');
         } catch (error) {
             console.error('Error en tarea cron:', error.message);
         }
     });
 
-    console.log('Cron jobs inicializados correctamente.');
 };

@@ -13,7 +13,6 @@ function ResumenMovimientos({ data, loading }) {
   const datosGrafico = transformarPie(data);
 
   const getMotivoColor = (label) => {
-    console.log(`Resumen movimientos: ${label}`);
     if (label === "Venta") return "#004ac6"; // Azul
     if (label === "Compra") return "#17c752ff"; // Verde
     if (label === "Dev. de Cliente") return "#f59e0b"; // Ámbar

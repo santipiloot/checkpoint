@@ -32,7 +32,7 @@ function FormUsuario({ isOpen, onClose, onUserCreated }) {
       const data = await response.json();
 
       if (!response.ok || !data.success) {
-        toast.error(data.message || "Hubo un error al registrar el usuario");
+        toast.error(data.message || data.error || "Hubo un error al registrar el usuario");
         if (data.errores) setErrores(data.errores);
         return;
       }

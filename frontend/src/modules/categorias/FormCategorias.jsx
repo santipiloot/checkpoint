@@ -42,7 +42,7 @@ function FormCategorias({ isOpen, onClose, onCategorySaved, editData = null }) {
       const data = await response.json();
 
       if (!response.ok || !data.success) {
-        toast.error(data.message || "Hubo un error al guardar la categoría");
+        toast.error(data.message || data.error || "Hubo un error al guardar la categoría");
         if (data.errores) setErrores(data.errores);
         return;
       }

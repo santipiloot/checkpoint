@@ -25,7 +25,6 @@ export default function TarjetaProveedores({ proveedor, onUpdate }) {
         const data = await response.json();
 
         if (!response.ok || !data.success) {
-          console.log("Hubo un error: ", data.error);
           return;
         }
 
@@ -51,7 +50,6 @@ export default function TarjetaProveedores({ proveedor, onUpdate }) {
         const data = await response.json();
 
         if (!response.ok || !data.success) {
-          console.log("Hubo un error: ", data.error);
           return;
         }
 

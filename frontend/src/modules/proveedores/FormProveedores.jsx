@@ -30,7 +30,7 @@ function FormProveedores() {
     const data = await response.json();
 
     if (!response.ok || !data.success) {
-      toast.error(data.message || "Hubo un error al guardar el proveedor");
+      toast.error(data.message || data.error || "Hubo un error al guardar el proveedor");
       if (data.errores) setErrores(data.errores);
       return;
     }

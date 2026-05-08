@@ -25,7 +25,6 @@ function TablaCategorias() {
             const data = await response.json();
 
             if (!response.ok) {
-                console.log("Hubo un error: ", data.error);
                 return;
             }
             setCategorias(data.data);
@@ -48,7 +47,6 @@ function TablaCategorias() {
                 const data = await response.json();
 
                 if (!response.ok || !data.success) {
-                    console.log("Hubo un error: ", data.error);
                     return;
                 }
 
@@ -69,7 +67,6 @@ function TablaCategorias() {
                 const data = await response.json();
 
                 if (!response.ok || !data.success) {
-                    console.log("Hubo un error: ", data.error);
                     return;
                 }
 

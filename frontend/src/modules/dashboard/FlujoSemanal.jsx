@@ -12,9 +12,7 @@ import {
 import { transformarTendencia } from "../reportes/utils/estandarizacionDatos.js";
 
 function FlujoSemanal({ data, loading }) {
-  console.log("Datos recibidos para el gráfico:", data);
   const datosGrafico = transformarTendencia(data);
-  console.log("Datos transformados:", datosGrafico);
 
   return (
     <div className="bg-white p-8 rounded-3xl border border-[#eceef0] shadow-sm h-full min-h-[500px] flex flex-col">

@@ -26,9 +26,9 @@ export const AuthProvider = ({ children }) => {
       const session = await response.json();
 
       if (!response.ok) {
-        throw new Error(session.message || session.error);
+        const errorMsg = session.message || session.error || (session.errores && session.errores[0].msg) || "Error al iniciar sesión";
+        throw new Error(errorMsg);
       }
-      console.log(session)
       setToken(session.token);
       setNombre(session.usuario.nombre);
       setEmail(session.usuario.email);

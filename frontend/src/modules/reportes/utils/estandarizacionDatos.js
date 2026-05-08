@@ -1,5 +1,4 @@
 export const transformarTendencia = (data) => {
-  console.log(`Transformar tendencia: ${data}`);
   if (!data || !Array.isArray(data)) return [];
 
   const agrupado = data.reduce((acc, curr) => {
@@ -34,7 +33,6 @@ const ETIQUETAS_MOVIMIENTO = {
 };
 
 export const transformarPie = (data) => {
-  console.log(`Transformar pie: ${data}`);
   if (!data || !Array.isArray(data)) return [];
   return data.map((item) => {
     const clave = `${item.tipo}+${item.motivo}`;

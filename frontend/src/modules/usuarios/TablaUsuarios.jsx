@@ -24,7 +24,6 @@ function TablaUsuarios() {
         const data = await response.json();
 
         if (!response.ok || !data.success) {
-          console.log("Hubo un error: ", data.error);
           return;
         }
 
@@ -48,7 +47,6 @@ function TablaUsuarios() {
         const data = await response.json();
 
         if (!response.ok || !data.success) {
-          console.log("Hubo un error: ", data.error);
           return;
         }
 
@@ -66,7 +64,6 @@ function TablaUsuarios() {
       const data = await response.json();
 
       if (!response.ok) {
-        console.log("Hubo un error: ", data.error);
         return;
       }
       setUsuarios(data.data);
@@ -104,21 +101,19 @@ function TablaUsuarios() {
         <div className="flex items-center gap-4 p-1 bg-surface-container-low rounded-2xl w-fit">
           <button
             onClick={() => setFiltro("activos")}
-            className={`px-6 py-2 rounded-xl text-sm font-bold transition-all ${
-              filtro === "activos"
+            className={`px-6 py-2 rounded-xl text-sm font-bold transition-all ${filtro === "activos"
                 ? "bg-white text-primary shadow-sm"
                 : "text-on-surface-variant hover:text-on-surface"
-            }`}
+              }`}
           >
             Activos
           </button>
           <button
             onClick={() => setFiltro("inactivos")}
-            className={`px-6 py-2 rounded-xl text-sm font-bold transition-all ${
-              filtro === "inactivos"
+            className={`px-6 py-2 rounded-xl text-sm font-bold transition-all ${filtro === "inactivos"
                 ? "bg-white text-primary shadow-sm"
                 : "text-on-surface-variant hover:text-on-surface"
-            }`}
+              }`}
           >
             Inactivos
           </button>
@@ -166,11 +161,10 @@ function TablaUsuarios() {
                     </td>
                     <td className="px-8 py-5">
                       <span
-                        className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-tight ${
-                          usuario.rol === "admin"
+                        className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-tight ${usuario.rol === "admin"
                             ? "bg-[#d5e3fc] text-[#004ac6]"
                             : "bg-[#eceef0] text-[#515f74]"
-                        }`}
+                          }`}
                       >
                         {usuario.rol}
                       </span>

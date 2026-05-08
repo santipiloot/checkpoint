@@ -35,7 +35,7 @@ export const obtenerMovimientos = async (filtros = {}) => {
 
     if (filtros.hasta) {
         values.push(filtros.hasta);
-        sql += ` AND m.creado_at <= $${values.length}`;
+        sql += ` AND m.creado_at < ($${values.length}::date + 1)`;
     }
 
     if (filtros.search) {

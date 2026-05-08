@@ -5,7 +5,7 @@ export const getTopVendidos = async (desde, hasta) => {
         SELECT p.nombre, p.id, SUM(m.cantidad) as total_vendido
         FROM movimientos_stock m
         JOIN productos p ON m.producto_id = p.id
-        WHERE m.motivo = 'venta' AND m.creado_at BETWEEN $1 AND $2
+        WHERE m.motivo = 'venta' AND m.creado_at >= $1 AND m.creado_at < ($2::date + 1)
         GROUP BY p.id, p.nombre
         ORDER BY total_vendido DESC
         LIMIT 10
@@ -20,7 +20,7 @@ export const getMenosVendidos = async (desde, hasta) => {
        FROM productos p
        LEFT JOIN movimientos_stock m ON p.id = m.producto_id 
        AND m.motivo = 'venta' 
-       AND m.creado_at BETWEEN $1 AND $2
+       AND m.creado_at >= $1 AND m.creado_at < ($2::date + 1)
        WHERE p.activo = true
        GROUP BY p.id, p.nombre
        ORDER BY total_vendido ASC
@@ -39,7 +39,7 @@ export const getAnalisisPerdidas = async (desde, hasta) => {
             SUM(ABS(m.cantidad) * p.precio_costo) as costo_estimado
         FROM movimientos_stock m
         JOIN productos p ON m.producto_id = p.id
-        WHERE m.creado_at BETWEEN $1 AND $2 
+        WHERE m.creado_at >= $1 AND m.creado_at < ($2::date + 1) 
           AND m.tipo = 'ajuste'
           AND m.cantidad < 0
           AND m.motivo IN ('daño', 'robo', 'correccion')
@@ -53,7 +53,7 @@ export const getResumenMovimientos = async (desde, hasta, tipo, motivo) => {
     let query = `
         SELECT tipo, motivo, COUNT(*) as total_movimientos, SUM(cantidad) as total_unidades
         FROM movimientos_stock
-        WHERE creado_at BETWEEN $1 AND $2
+        WHERE creado_at >= $1 AND creado_at < ($2::date + 1)
     `;
     const params = [desde, hasta];
 
@@ -76,7 +76,7 @@ export const getMovimientosPorDia = async (desde, hasta) => {
     const query = `
         SELECT DATE(creado_at) as fecha, tipo, motivo, SUM(cantidad) as total_unidades
         FROM movimientos_stock
-        WHERE creado_at BETWEEN $1 AND $2
+        WHERE creado_at >= $1 AND creado_at < ($2::date + 1)
         GROUP BY DATE(creado_at), tipo, motivo
         ORDER BY fecha ASC
     `;
